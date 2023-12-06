@@ -19,6 +19,7 @@ const EntranceCheckout = ({ product, application, discount }) => {
       examapplicationId: application.id,
       description: product.name,
       amount: finalAmount,
+      type: "AGENT",
     };
 
     const txn = await createEntranceTransaction(input);
