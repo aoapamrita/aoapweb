@@ -16,7 +16,7 @@ const navigation = [
     children: [
       { name: "UTM", href: "/admin/reports/utm" },
       { name: "UTM Source", href: "/admin/reports/utmreport" },
-      { name: "UTM Source1", href: "/admin/reports/utmreport" },
+      { name: "Application", href: "/admin/reports/application" },
       { name: "State", href: "/admin/reports/state" },
       { name: "District", href: "/admin/reports/district" },
       { name: "Exam", href: "/admin/reports/exam" },
@@ -46,10 +46,7 @@ const navigation = [
   },
   {
     name: "Agents",
-    children: [
-      { name: "Stats", href: "/admin/agents" },
-      { name: "List", href: "/admin/agents/list" },
-    ],
+    children: [{ name: "Agent", href: "/admin/agents" }],
   },
   {
     name: "Counsellors",

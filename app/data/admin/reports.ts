@@ -9,9 +9,6 @@ export const getUTMReport = async (input) => {
   }
 };
 
-
-
-
 export const getUTMReportBySource = async (input) => {
   try {
     const { data } = await apiclient.post(`/api/admin/reports/utmsource`, input);
@@ -21,8 +18,14 @@ export const getUTMReportBySource = async (input) => {
   }
 };
 
-
-
+export const getApplicationReport = async (input) => {
+  try {
+    const { data } = await apiclient.post(`/api/admin/reports/application`, input);
+    return data;
+  } catch (error) {
+    return null;
+  }
+};
 
 export const getExamCityReport = async (input) => {
   try {
@@ -54,6 +57,22 @@ export const downloadUTMSourceReport = async (input) => {
   try {
     const { data } = await apiclient.post(
       `/api/admin/reports/utmsource?download=true`,
+      input,
+      {
+        responseType: "blob",
+      }
+    );
+    return data;
+  } catch (error) {
+    const { data } = error.response;
+    return data;
+  }
+};
+
+export const downloadApplicationReport = async (input) => {
+  try {
+    const { data } = await apiclient.post(
+      `/api/admin/reports/application?download=true`,
       input,
       {
         responseType: "blob",
