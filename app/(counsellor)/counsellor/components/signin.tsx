@@ -6,6 +6,7 @@ import signIn from "@/app/data/counsellor/authenticationclient";
 import { useState } from "react";
 import DataLoader from "@/app/components/DataLoader";
 import { redirect, useRouter } from "next/navigation";
+import Link from "next/link";
 
 const LoginSchema = yup.object().shape({
   email: yup.string().required("Email is required"),
@@ -91,14 +92,14 @@ export default function SignIn() {
                 >
                   Password
                 </label>
-                {/* <div className="text-sm">
-                  <a
-                    href="#"
+                <div className="text-sm">
+                  <Link
+                    href="/counsellor/forgotpassword"
                     className="font-semibold text-pink-600 hover:text-pink-500"
                   >
                     Forgot password?
-                  </a>
-                </div> */}
+                  </Link>
+                </div>
               </div>
               <div className="mt-2">
                 <input

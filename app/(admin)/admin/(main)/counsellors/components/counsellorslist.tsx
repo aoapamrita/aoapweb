@@ -137,7 +137,7 @@ export default function CounsellorsList() {
           <>
             <div className="space-y-5 max-w-2xl">
               <h2 className="text-base font-semibold leading-7 text-gray-900">
-                Agents
+                Counsellors
               </h2>
               <form
                 action=""

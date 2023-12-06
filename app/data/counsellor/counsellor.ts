@@ -42,3 +42,15 @@ export const updateCounsellor = async ({ id, input }) => {
     return data;
   }
 };
+
+export const forgotCounsellorPassword = async (username) => {
+  try {
+    const { data } = await apiclient.post(`/api/counsellor/forgotpassword`, {
+      username,
+    });
+    return data;
+  } catch (error) {
+    const { data } = error.response;
+    return data;
+  }
+};

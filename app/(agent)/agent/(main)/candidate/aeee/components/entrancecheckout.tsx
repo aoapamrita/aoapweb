@@ -19,6 +19,7 @@ const EntranceCheckout = ({ product, application, discount }) => {
       examapplicationId: application.id,
       description: product.name,
       amount: finalAmount,
+      type: "AGENT",
     };
 
     const txn = await createEntranceTransaction(input);
@@ -30,8 +31,8 @@ const EntranceCheckout = ({ product, application, discount }) => {
       amount: txn.amount,
       productinfo: txn.description,
       firstname: application.candidate.fullname,
-      email: application.candidate.email,
-      phone: application.candidate.phone,
+      email: application.candidate.agent.email,
+      phone: application.candidate.agent.phone,
       udf1: application.id,
     };
     console.log(params);
