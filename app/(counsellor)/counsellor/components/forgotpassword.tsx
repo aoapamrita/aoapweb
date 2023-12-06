@@ -2,15 +2,15 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
-import signIn from "@/app/data/agent/authenticationclient";
-import { useState } from "react";
 import DataLoader from "@/app/components/DataLoader";
-import { redirect, useRouter } from "next/navigation";
-import Link from "next/link";
-import { forgotAgentPassword } from "@/app/data/agent/agent";
+import { useRouter } from "next/navigation";
+import { forgotCounsellorPassword } from "@/app/data/counsellor/counsellor";
 
 const ForgotSchema = yup.object().shape({
-  username: yup.string().required("Username is required"),
+  username: yup
+    .string()
+    .required("Username is required")
+    .email("Enter Valid Email"),
 });
 
 export default function ForgotPassword() {
@@ -33,9 +33,9 @@ export default function ForgotPassword() {
 
   const onSubmit = async (data) => {
     console.log("processing data", data);
-    const result = await forgotAgentPassword(data.username);
+    const result = await forgotCounsellorPassword(data.username);
     console.log("processed data", result);
-    router.push("/agent/forgotpassword/send");
+    router.push("/counsellor/forgotpassword/send");
   };
 
   return (
@@ -43,7 +43,7 @@ export default function ForgotPassword() {
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm flex flex-col items-center">
           <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-            AOAP Agent Forgot Password
+            AOAP Counsellor Forgot Password
           </h2>
         </div>
 

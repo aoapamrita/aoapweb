@@ -19,6 +19,8 @@ const Page = async ({ params }) => {
   if (agent) {
     discount = parseFloat(agent.amount);
   }
+  console.log(application);
+
   const product = await getProductByCode("aeeeentrance");
 
   return (
