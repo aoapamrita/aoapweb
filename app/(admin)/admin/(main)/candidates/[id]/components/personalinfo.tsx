@@ -3,23 +3,32 @@ import getCandidate from "@/app/data/getCandidate";
 import React from "react";
 import CldPicture from "../components/cldpicture";
 import { useQuery } from "@tanstack/react-query";
-
+import * as yup from "yup";
 import dayjs from "dayjs";
 import DataLoader from "@/app/components/DataLoader";
 import { getCandidateById } from "@/app/data/agent/candidate";
 import { ArrowLeftIcon, UserCircleIcon } from "@heroicons/react/24/outline";
 import { PiSignatureBold } from "react-icons/pi";
 import { useRouter } from "next/navigation";
+import ValueDisplay from "./valuedisplay";
 const PersonalInfo = ({ candidateId }) => {
   const router = useRouter();
 
-  const { data: candidate, isLoading } = useQuery({
+  const {
+    data: candidate,
+    isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ["candidate", candidateId],
     queryFn: () => getCandidateById(candidateId),
   });
 
   const handleGoBack = () => {
     router.back();
+  };
+
+  const handleRefetchData = async () => {
+    refetch();
   };
 
   return (
@@ -89,9 +98,15 @@ const PersonalInfo = ({ candidateId }) => {
                 Full name
               </dt>
               <dd className="mt-1 flex justify-between gap-x-6 sm:mt-0 sm:flex-auto">
-                <div className="text-gray-900">
-                  {candidate.fullname && candidate.fullname}
-                </div>
+                <ValueDisplay
+                  refetchData={handleRefetchData}
+                  candidateId={candidate.id}
+                  field="fullname"
+                  value={candidate.fullname && candidate.fullname}
+                  schema={yup.object().shape({
+                    fullname: yup.string().required("Name Required"),
+                  })}
+                />
               </dd>
             </div>
             <div className="pt-6 sm:flex">
