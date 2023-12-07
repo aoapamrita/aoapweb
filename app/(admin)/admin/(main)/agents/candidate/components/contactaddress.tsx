@@ -66,7 +66,7 @@ const ContactAddress = ({ candidateId }) => {
                 Address Line 2
               </dt>
               <dd className="mt-1 flex justify-between gap-x-6 sm:mt-0 sm:flex-auto">
-                <div className="text-gray-400 italic">{candidate.address2}</div>
+                <div className="text-gray-400 ">{candidate.address2}</div>
               </dd>
             </div>
           </>
