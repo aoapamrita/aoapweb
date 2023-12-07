@@ -22,7 +22,13 @@ const navigation = [
       { name: "Exam", href: "/admin/reports/exam" },
       { name: "Exam City", href: "/admin/reports/examcity" },
       { name: "Referer", href: "/admin/reports/referer" },
-      { name: "Candidates", href: "/admin/reports/candidates" },
+    ],
+  },
+  {
+    name: "Candidates",
+    children: [
+      { name: "Export", href: "/admin/reports/candidates" },
+      { name: "Search", href: "/admin/candidates" },
     ],
   },
   {
