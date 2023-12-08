@@ -1,7 +1,15 @@
 import React, { useState } from "react";
-import ValueEditForm from "./valueeditform";
+import ValueEditSelectForm from "./valueeditselectform";
 
-const ValueDisplay = ({ candidateId, field, value, schema, refetchData }) => {
+const ValueSelectDisplay = ({
+  candidateId,
+  field,
+  value,
+  schema,
+  refetchData,
+  queryKey,
+  queryFn,
+}) => {
   const [editMode, setEditMode] = useState(false);
 
   async function completeEdit() {
@@ -12,16 +20,18 @@ const ValueDisplay = ({ candidateId, field, value, schema, refetchData }) => {
   return (
     <>
       {editMode ? (
-        <ValueEditForm
+        <ValueEditSelectForm
           candidateId={candidateId}
           field={field}
           value={value}
           schema={schema}
           setEditMode={completeEdit}
+          queryKey={queryKey}
+          queryFn={queryFn}
         />
       ) : (
         <>
-          <span className="flex-grow text-gray-700">{value}</span>
+          <span className="flex-grow text-gray-700">{value.name}</span>
 
           <span className="ml-4 flex-shrink-0">
             <button
@@ -38,4 +48,4 @@ const ValueDisplay = ({ candidateId, field, value, schema, refetchData }) => {
   );
 };
 
-export default ValueDisplay;
+export default ValueSelectDisplay;

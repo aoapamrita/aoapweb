@@ -1,10 +1,18 @@
 import React from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-import createCandidate from "@/app/data/updateCandidate";
-import { updateCandidateById } from "@/app/data/admin/candidate";
+import {
+  updateCandidateById,
+  updateCandidateParentById,
+} from "@/app/data/admin/candidate";
 
-const ValueEditForm = ({ candidateId, field, value, schema, setEditMode }) => {
+const ValueParentEditForm = ({
+  candidateId,
+  field,
+  value,
+  schema,
+  setEditMode,
+}) => {
   const {
     register,
     handleSubmit,
@@ -24,7 +32,7 @@ const ValueEditForm = ({ candidateId, field, value, schema, setEditMode }) => {
 
   const onSubmit = async (data) => {
     clearErrors();
-    const res = await updateCandidateById(candidateId, data);
+    const res = await updateCandidateParentById(candidateId, data);
     if (res.errors) {
       res.errors.forEach((error) => {
         setError(error.field, {
@@ -71,4 +79,4 @@ const ValueEditForm = ({ candidateId, field, value, schema, setEditMode }) => {
   );
 };
 
-export default ValueEditForm;
+export default ValueParentEditForm;

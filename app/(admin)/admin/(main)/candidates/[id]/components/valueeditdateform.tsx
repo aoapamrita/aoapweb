@@ -3,8 +3,18 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import createCandidate from "@/app/data/updateCandidate";
 import { updateCandidateById } from "@/app/data/admin/candidate";
+import { useQuery } from "@tanstack/react-query";
+import getGender from "@/app/data/getGender";
+import DataLoader from "@/app/components/DataLoader";
+import DatepickerComponent from "./DatepickerComponent";
 
-const ValueEditForm = ({ candidateId, field, value, schema, setEditMode }) => {
+const ValueEditDateForm = ({
+  candidateId,
+  field,
+  value,
+  schema,
+  setEditMode,
+}) => {
   const {
     register,
     handleSubmit,
@@ -14,6 +24,8 @@ const ValueEditForm = ({ candidateId, field, value, schema, setEditMode }) => {
     formState: { errors, isSubmitting },
   } = useForm({
     resolver: async (data, context, options) => {
+      console.log("form data", data);
+
       console.log(
         "validation result",
         await yupResolver(schema)(data, context, options)
@@ -23,6 +35,7 @@ const ValueEditForm = ({ candidateId, field, value, schema, setEditMode }) => {
   });
 
   const onSubmit = async (data) => {
+    console.log(data);
     clearErrors();
     const res = await updateCandidateById(candidateId, data);
     if (res.errors) {
@@ -38,12 +51,17 @@ const ValueEditForm = ({ candidateId, field, value, schema, setEditMode }) => {
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <input
+      <DatepickerComponent
+        control={control}
+        name={field}
         defaultValue={value}
-        type="text"
-        id={`${field}`}
-        {...register(`${field}`)}
-        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-pink-600 text-sm sm:leading-6"
+        transform={{
+          input: (dateValue) => ({
+            startDate: dateValue,
+            endDate: dateValue,
+          }),
+          output: (dateRange) => dateRange.startDate,
+        }}
       />
       {errors[field] && (
         <p className="mt-2 text-sm text-red-600" id="email-error">
@@ -71,4 +89,4 @@ const ValueEditForm = ({ candidateId, field, value, schema, setEditMode }) => {
   );
 };
 
-export default ValueEditForm;
+export default ValueEditDateForm;

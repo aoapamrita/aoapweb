@@ -1,15 +1,23 @@
 import DataLoader from "@/app/components/DataLoader";
 import { getCandidateParentById } from "@/app/data/agent/candidate";
-import getCandidateParent from "@/app/data/getCandidateParent";
+import * as yup from "yup";
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
+import ValueParentDisplay from "./valueparentdisplay";
 
 const ParentInfo = ({ candidateId }) => {
-  const { data: parentInfo, isLoading } = useQuery({
+  const {
+    data: parentInfo,
+    isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ["candidate", "parent", candidateId],
     queryFn: () => getCandidateParentById(candidateId),
   });
-  console.log("parentInfo", parentInfo);
+
+  const handleRefetchData = async () => {
+    refetch();
+  };
 
   return (
     <div>
@@ -31,31 +39,51 @@ const ParentInfo = ({ candidateId }) => {
                 Parent’s / Guardian’s Name
               </dt>
               <dd className="mt-1 flex justify-between gap-x-6 sm:mt-0 sm:flex-auto">
-                <div className="text-gray-900">
-                  {parentInfo.fullname ? parentInfo.fullname : "Nil"}
-                </div>
+                <ValueParentDisplay
+                  refetchData={handleRefetchData}
+                  candidateId={parentInfo.candidateId}
+                  field="fullname"
+                  value={parentInfo.fullname && parentInfo.fullname}
+                  schema={yup.object().shape({
+                    fullname: yup.string().required("Name Required"),
+                  })}
+                />
               </dd>
             </div>
             <div className="pt-6 sm:flex">
               <dt className="font-medium text-gray-900 sm:w-64 sm:flex-none sm:pr-6">
                 Parent’s / Guardian’s Email address
               </dt>
-              <dd className="mt-1 flex justify-between gap-x-6 sm:mt-0 sm:flex-auto">
-                <div className="text-gray-900">
-                  {parentInfo.email ? parentInfo.email : "Nil"}
-                </div>
+              <dd className="mt-1 flex justify-between sm:mt-0 sm:flex-auto">
+                <ValueParentDisplay
+                  refetchData={handleRefetchData}
+                  candidateId={parentInfo.candidateId}
+                  field="email"
+                  value={parentInfo.email}
+                  schema={yup.object().shape({
+                    email: yup
+                      .string()
+                      .required("Email is required")
+                      .email("Enter Valid Email"),
+                  })}
+                />
               </dd>
             </div>
             <div className="pt-6 sm:flex">
               <dt className="font-medium text-gray-900 sm:w-64 sm:flex-none sm:pr-6">
                 Parent’s / Guardian’s Phone
               </dt>
-              <dd className="mt-1 flex justify-between gap-x-6 sm:mt-0 sm:flex-auto">
-                <div className="text-gray-900">
-                  {parentInfo.phone
-                    ? `${parentInfo.phonecode} ${parentInfo.phone}`
-                    : "Nil"}
-                </div>
+              <dd className="mt-1 flex justify-between gap-x-2 sm:mt-0 sm:flex-auto">
+                <span>+91</span>
+                <ValueParentDisplay
+                  refetchData={handleRefetchData}
+                  candidateId={parentInfo.candidateId}
+                  field="phone"
+                  value={parentInfo.phone}
+                  schema={yup.object().shape({
+                    phone: yup.string().required("Phone is required"),
+                  })}
+                />
               </dd>
             </div>
           </div>

@@ -11,6 +11,11 @@ import { ArrowLeftIcon, UserCircleIcon } from "@heroicons/react/24/outline";
 import { PiSignatureBold } from "react-icons/pi";
 import { useRouter } from "next/navigation";
 import ValueDisplay from "./valuedisplay";
+import ValueSelectDisplay from "./valueselectdisplay";
+import getGender from "@/app/data/getGender";
+import getSocialStatus from "@/app/data/getSocialStatus";
+import getInfoSource from "@/app/data/getInfoSource";
+import ValueDateDisplay from "./valuedatedisplay";
 const PersonalInfo = ({ candidateId }) => {
   const router = useRouter();
 
@@ -114,9 +119,15 @@ const PersonalInfo = ({ candidateId }) => {
                 Date of Birth
               </dt>
               <dd className="mt-1 flex justify-between gap-x-6 sm:mt-0 sm:flex-auto">
-                <div className="text-gray-900">
-                  {candidate.dob && dayjs(candidate.dob).format("DD/MM/YYYY")}
-                </div>
+                <ValueDateDisplay
+                  refetchData={handleRefetchData}
+                  candidateId={candidate.id}
+                  field="dob"
+                  value={candidate.dob}
+                  schema={yup.object().shape({
+                    dob: yup.string().required("DOB is required"),
+                  })}
+                />
               </dd>
             </div>
             <div className="pt-6 sm:flex">
@@ -124,9 +135,17 @@ const PersonalInfo = ({ candidateId }) => {
                 Gender
               </dt>
               <dd className="mt-1 flex justify-between gap-x-6 sm:mt-0 sm:flex-auto">
-                <div className="text-gray-900">
-                  {candidate.gender && candidate.gender.name}
-                </div>
+                <ValueSelectDisplay
+                  refetchData={handleRefetchData}
+                  candidateId={candidate.id}
+                  field="genderId"
+                  value={candidate.gender}
+                  schema={yup.object().shape({
+                    genderId: yup.number().positive("Gender is required"),
+                  })}
+                  queryKey="gender"
+                  queryFn={getGender}
+                />
               </dd>
             </div>
             <div className="pt-6 sm:flex">
@@ -134,9 +153,19 @@ const PersonalInfo = ({ candidateId }) => {
                 Social Status
               </dt>
               <dd className="mt-1 flex justify-between gap-x-6 sm:mt-0 sm:flex-auto">
-                <div className="text-gray-900">
-                  {candidate.socialstatus && candidate.socialstatus.name}
-                </div>
+                <ValueSelectDisplay
+                  refetchData={handleRefetchData}
+                  candidateId={candidate.id}
+                  field="socialstatusId"
+                  value={candidate.socialstatus}
+                  schema={yup.object().shape({
+                    socialstatusId: yup
+                      .number()
+                      .positive("Social Status is required"),
+                  })}
+                  queryKey="socialstatus"
+                  queryFn={getSocialStatus}
+                />
               </dd>
             </div>
             <div className="pt-6 sm:flex">
@@ -165,7 +194,21 @@ const PersonalInfo = ({ candidateId }) => {
                 Aadhaar
               </dt>
               <dd className="mt-1 flex justify-between gap-x-6 sm:mt-0 sm:flex-auto">
-                <div className="text-gray-900">{candidate.aadhaarnumber}</div>
+                <ValueDisplay
+                  refetchData={handleRefetchData}
+                  candidateId={candidate.id}
+                  field="aadhaarnumber"
+                  value={candidate.aadhaarnumber}
+                  schema={yup.object().shape({
+                    aadhaarnumber: yup
+                      .string()
+                      .matches(
+                        /^\d{12}$/,
+                        "Aadhar number must be exactly 12 digits"
+                      )
+                      .required("Aadhar number is required"),
+                  })}
+                />
               </dd>
             </div>
             <div className="pt-6 sm:flex">
@@ -173,9 +216,17 @@ const PersonalInfo = ({ candidateId }) => {
                 How did you come to know about Amrita?
               </dt>
               <dd className="mt-1 flex justify-between gap-x-6 sm:mt-0 sm:flex-auto">
-                <div className="text-gray-900">
-                  {candidate.infosource && candidate.infosource.name}
-                </div>
+                <ValueSelectDisplay
+                  refetchData={handleRefetchData}
+                  candidateId={candidate.id}
+                  field="infosourceId"
+                  value={candidate.infosource}
+                  schema={yup.object().shape({
+                    infosourceId: yup.number().positive("Source is required"),
+                  })}
+                  queryKey="infosource"
+                  queryFn={getInfoSource}
+                />
               </dd>
             </div>
           </>

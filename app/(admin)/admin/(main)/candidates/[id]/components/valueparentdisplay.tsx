@@ -1,7 +1,13 @@
 import React, { useState } from "react";
-import ValueEditForm from "./valueeditform";
+import ValueParentEditForm from "./valueparenteditform";
 
-const ValueDisplay = ({ candidateId, field, value, schema, refetchData }) => {
+const ValueParentDisplay = ({
+  candidateId,
+  field,
+  value,
+  schema,
+  refetchData,
+}) => {
   const [editMode, setEditMode] = useState(false);
 
   async function completeEdit() {
@@ -12,7 +18,7 @@ const ValueDisplay = ({ candidateId, field, value, schema, refetchData }) => {
   return (
     <>
       {editMode ? (
-        <ValueEditForm
+        <ValueParentEditForm
           candidateId={candidateId}
           field={field}
           value={value}
@@ -38,4 +44,4 @@ const ValueDisplay = ({ candidateId, field, value, schema, refetchData }) => {
   );
 };
 
-export default ValueDisplay;
+export default ValueParentDisplay;

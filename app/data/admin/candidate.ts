@@ -9,3 +9,13 @@ export const updateCandidateById = async (id, input) => {
     return data;
   }
 };
+
+export const updateCandidateParentById = async (id, input) => {
+  try {
+    const { data } = await apiclient.put(`/api/candidate/${id}/parent`, input);
+    return data;
+  } catch (error) {
+    const { data } = error.response;
+    return data;
+  }
+};

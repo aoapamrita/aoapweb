@@ -38,7 +38,7 @@ const PersonalInfoSchema = yup.object().shape({
   dob: yup.string().required("DOB is required"),
   genderId: yup.number().positive("Gender is required"),
   socialstatusId: yup.number().positive("Social Status is required"),
-  infosourceId: yup.number().positive("Please select"),
+  infosourceId: yup.number().positive("Source is required"),
   aadhaarnumber: yup
     .string()
     .matches(/^\d{12}$/, "Aadhar number must be exactly 12 digits")

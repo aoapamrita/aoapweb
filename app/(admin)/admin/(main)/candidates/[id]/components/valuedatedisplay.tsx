@@ -1,7 +1,14 @@
 import React, { useState } from "react";
-import ValueEditForm from "./valueeditform";
+import ValueEditDateForm from "./valueeditdateform";
+import dayjs from "dayjs";
 
-const ValueDisplay = ({ candidateId, field, value, schema, refetchData }) => {
+const ValueDateDisplay = ({
+  candidateId,
+  field,
+  value,
+  schema,
+  refetchData,
+}) => {
   const [editMode, setEditMode] = useState(false);
 
   async function completeEdit() {
@@ -12,7 +19,7 @@ const ValueDisplay = ({ candidateId, field, value, schema, refetchData }) => {
   return (
     <>
       {editMode ? (
-        <ValueEditForm
+        <ValueEditDateForm
           candidateId={candidateId}
           field={field}
           value={value}
@@ -21,7 +28,9 @@ const ValueDisplay = ({ candidateId, field, value, schema, refetchData }) => {
         />
       ) : (
         <>
-          <span className="flex-grow text-gray-700">{value}</span>
+          <span className="flex-grow text-gray-700">
+            {dayjs(value).format("DD/MM/YYYY")}
+          </span>
 
           <span className="ml-4 flex-shrink-0">
             <button
@@ -38,4 +47,4 @@ const ValueDisplay = ({ candidateId, field, value, schema, refetchData }) => {
   );
 };
 
-export default ValueDisplay;
+export default ValueDateDisplay;
