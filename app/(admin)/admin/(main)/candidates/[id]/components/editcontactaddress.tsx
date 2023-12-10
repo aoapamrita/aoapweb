@@ -333,6 +333,7 @@ const EditContactAddress = ({ completeEdit, candidate }) => {
       <div className="h-4"></div>
       <div className="flex gap-3 justify-end">
         <button
+          type="button"
           onClick={() => completeEdit()}
           className="text-sm rounded-md bg-white font-medium text-pink-600 hover:text-pink-500"
         >
