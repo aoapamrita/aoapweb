@@ -16,6 +16,8 @@ import getGender from "@/app/data/getGender";
 import getSocialStatus from "@/app/data/getSocialStatus";
 import getInfoSource from "@/app/data/getInfoSource";
 import ValueDateDisplay from "./valuedatedisplay";
+import ValuePhotoDisplay from "./valuephotodisplay";
+import ValueSignDisplay from "./valuesigndisplay";
 const PersonalInfo = ({ candidateId }) => {
   const router = useRouter();
 
@@ -63,39 +65,19 @@ const PersonalInfo = ({ candidateId }) => {
             <div className="pt-6 sm:flex">
               <dt className="font-medium text-gray-900 sm:w-64 sm:flex-none sm:pr-6">
                 <p className="mb-2">Photo</p>
-                {candidate.photoid ? (
-                  <CldPicture
-                    width="150"
-                    height="250"
-                    src={candidate.photoid}
-                    sizes="100vw"
-                    alt="Description of my image"
-                    className="h-24 w-24 flex-none rounded-lg bg-gray-800 object-cover"
-                  />
-                ) : (
-                  <UserCircleIcon
-                    className="h-24 w-24 text-gray-300"
-                    aria-hidden="true"
-                  />
-                )}
+                <ValuePhotoDisplay
+                  candidateId={candidate.id}
+                  value={candidate.photoid}
+                  refetchData={handleRefetchData}
+                />
               </dt>
               <dd className="mt-1 gap-x-6 sm:mt-0 sm:flex-auto">
-                <p className="font-medium text-gray-900 mb-2">Signature</p>
-                {candidate.signid ? (
-                  <CldPicture
-                    width="500"
-                    height="100"
-                    src={candidate.signid}
-                    sizes="100vw"
-                    alt="Description of my image"
-                    className="h-24 w-48 flex-none rounded-lg object-contain border border-gray-200"
-                  />
-                ) : (
-                  <PiSignatureBold
-                    className="h-24 w-24 text-gray-300"
-                    aria-hidden="true"
-                  />
-                )}
+                <p className="mb-2">Signature</p>
+                <ValueSignDisplay
+                  candidateId={candidate.id}
+                  value={candidate.signid}
+                  refetchData={handleRefetchData}
+                />
               </dd>
             </div>
             <div className="pt-6 sm:flex">
