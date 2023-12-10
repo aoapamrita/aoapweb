@@ -29,8 +29,6 @@ const EditContactAddress = ({ completeEdit, candidate }) => {
     candidate.cityId ? candidate.cityId : 9999999999
   );
 
-  const [lother, setOther] = useState(candidate.otherCity);
-
   const { data: states, isLoading: statesLoading } = useQuery({
     queryKey: ["states"],
     queryFn: () => getStates(),
@@ -263,14 +261,14 @@ const EditContactAddress = ({ completeEdit, candidate }) => {
           </label>
           <div className="relative mt-2">
             <Controller
+              defaultValue={candidate.otherCity}
               name="otherCity"
               control={control}
               render={({ field }) => (
                 <input
-                  value={lother}
+                  defaultValue={candidate.otherCity}
                   type="text"
                   onChange={(e) => {
-                    setOther(e.target.value);
                     field.onChange(e.target.value);
                   }}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-pink-600 text-sm sm:leading-6"
