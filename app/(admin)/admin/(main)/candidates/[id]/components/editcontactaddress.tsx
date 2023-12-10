@@ -109,7 +109,6 @@ const EditContactAddress = ({ completeEdit, candidate }) => {
                       setStateId(parseInt(e.target.value));
                       setDistrictId(null);
                       setCityId(null);
-                      setOther("");
                       field.onChange(parseInt(e.target.value));
                     }}
                     className="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-pink-600 text-sm sm:leading-6"
@@ -168,7 +167,6 @@ const EditContactAddress = ({ completeEdit, candidate }) => {
                     onChange={(e) => {
                       setDistrictId(parseInt(e.target.value));
                       setCityId(null);
-                      setOther("");
                       field.onChange(parseInt(e.target.value));
                     }}
                     className="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-pink-600 text-sm sm:leading-6"
@@ -225,7 +223,6 @@ const EditContactAddress = ({ completeEdit, candidate }) => {
                     defaultValue={lcityId}
                     onChange={(e) => {
                       setCityId(parseInt(e.target.value));
-                      setOther("");
                       field.onChange(parseInt(e.target.value));
                     }}
                     className="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-pink-600 text-sm sm:leading-6"
