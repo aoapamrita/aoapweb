@@ -6,14 +6,14 @@ const AgentPayProcessingForm = ({ txndetails }) => {
   console.log(txndetails);
 
   // production details
-  //   const key = "ypfBaj";
-  //   const salt = "aG3tGzBZ";
-  //   const gatewayUrl = "https://secure.payu.in/_payment";
+  const key = "ypfBaj";
+  const salt = "aG3tGzBZ";
+  const gatewayUrl = "https://secure.payu.in/_payment";
 
   // development details
-  const key = "aJ1WVm";
-  const salt = "hKmYSMBAzg5QOw64IV9MFtcu6BKaIyYA";
-  const gatewayUrl = "https://test.payu.in/_payment";
+  //   const key = "aJ1WVm";
+  //   const salt = "hKmYSMBAzg5QOw64IV9MFtcu6BKaIyYA";
+  //   const gatewayUrl = "https://test.payu.in/_payment";
 
   const hash = generateHash(txndetails, salt);
   const surl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/exam/agentpaymentsuccess`;

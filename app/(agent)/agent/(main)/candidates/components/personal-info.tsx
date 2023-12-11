@@ -71,24 +71,6 @@ const PersonalInfo = () => {
   const [ldistrictId, setDistrictId] = useState(null);
   const [lcityId, setCityId] = useState(null);
 
-  const [userEmail, setUserEmail] = useState("");
-  const [emailverified, setEmailVerified] = useState("");
-  const [otpEmailMode, setOtpEmailMode] = useState(false);
-  const [mailOtpResend, setMailOtpResend] = useState(false);
-  const [mailOtpVerifying, setMailOtpVerifying] = useState(false);
-  const [mailOtpFetching, setMailOtpFetching] = useState(false);
-  const [mailOtpError, setMailOtpError] = useState("");
-  const [mailOtp, setMailOtp] = useState("");
-
-  const [userPhone, setUserPhone] = useState("");
-  const [phoneverified, setPhoneVerified] = useState("");
-  const [otpPhoneMode, setOtpPhoneMode] = useState(false);
-  const [phoneOtpResend, setPhoneOtpResend] = useState(false);
-  const [phoneOtpVerifying, setPhoneOtpVerifying] = useState(false);
-  const [phoneOtpFetching, setPhoneOtpFetching] = useState(false);
-  const [phoneOtpError, setPhoneOtpError] = useState("");
-  const [phoneOtp, setPhoneOtp] = useState("");
-
   const [lphotoid, setPhotoId] = useState("");
   const [lsignid, setSignId] = useState("");
 
@@ -131,16 +113,6 @@ const PersonalInfo = () => {
     staleTime: 1000 * 60 * 10,
   });
 
-  function emailOnChange(e) {
-    setUserEmail(e.target.value);
-    setEmailVerified("");
-  }
-
-  function phoneOnChange(e) {
-    setUserPhone(e.target.value);
-    setPhoneVerified("");
-  }
-
   const {
     register,
     handleSubmit,
@@ -162,121 +134,24 @@ const PersonalInfo = () => {
   });
 
   const onSubmit = async (data) => {
-    clearErrors("emailverified");
-    clearErrors("phoneverified");
-    const isEmailVerified = emailverified != "";
-    const isPhoneVerified = phoneverified != "";
-    if (isEmailVerified && isPhoneVerified) {
-      const submitData = { ...data, agentId };
-      console.log("submitted data", submitData);
+    const submitData = { ...data, agentId };
 
-      const res = await createAgentCandidate(submitData);
+    const res = await createAgentCandidate(submitData);
 
-      console.log(res);
-
-      if (!res.errors) {
-        const onboarding = await updateAgentOnboarding({
-          data: { current: 2, candidateId: res.id },
-        });
-        router.push(`/agent/candidate/${res.id}`);
-      } else {
-        res.errors.forEach((error) => {
-          setError(error.field, {
-            type: "custom",
-            message: error.message,
-          });
-        });
-      }
+    if (!res.errors) {
+      const onboarding = await updateAgentOnboarding({
+        data: { current: 2, candidateId: res.id },
+      });
+      router.push(`/agent/candidate/${res.id}`);
     } else {
-      if (!isEmailVerified) {
-        setError("emailverified", {
+      res.errors.forEach((error) => {
+        setError(error.field, {
           type: "custom",
-          message: "Email is not verified",
+          message: error.message,
         });
-      }
-      if (!isPhoneVerified) {
-        setError("phoneverified", {
-          type: "custom",
-          message: "Phone is not verified",
-        });
-      }
+      });
     }
   };
-
-  async function sendMailOtp(e) {
-    if (isValidEmail(userEmail)) {
-      setMailOtpError("");
-      setMailOtpFetching(true);
-      let status = await sendEmailOtp({ email: userEmail });
-      setMailOtpFetching(false);
-      if (status) {
-        setOtpTimer();
-        setOtpEmailMode(true);
-      }
-    } else {
-      setMailOtpError("Invalid Email");
-    }
-  }
-
-  async function sendPhoneNoOtp(e) {
-    if (isValidPhone(userPhone)) {
-      setPhoneOtpError("");
-      setPhoneOtpFetching(true);
-      let status = await sendPhoneOtp({ phone: userPhone });
-      setPhoneOtpFetching(false);
-      if (status) {
-        setOtpTimer();
-        setOtpPhoneMode(true);
-      }
-    } else {
-      setPhoneOtpError("Invalid Phone");
-    }
-  }
-
-  async function verifyEmail(e) {
-    e.preventDefault();
-    setMailOtpVerifying(true);
-    const status = await verifyEmailOtp({ email: userEmail, otp: mailOtp });
-    setMailOtpVerifying(false);
-    if (status) {
-      setEmailVerified(new Date().toISOString());
-      setMailOtpError("");
-      setMailOtp("");
-      setOtpEmailMode(false);
-      setMailOtpResend(false);
-      clearErrors("emailverified");
-    } else {
-      setMailOtpError("Verification Failed");
-      setMailOtp("");
-    }
-  }
-
-  async function verifyPhone(e) {
-    e.preventDefault();
-    setPhoneOtpVerifying(true);
-    const status = await verifyPhoneOtp({ phone: userPhone, otp: phoneOtp });
-    setPhoneOtpVerifying(false);
-    if (status) {
-      setPhoneVerified(new Date().toISOString());
-      setPhoneOtpError("");
-      setPhoneOtp("");
-      setOtpPhoneMode(false);
-      setPhoneOtpResend(false);
-      clearErrors("phoneverified");
-    } else {
-      setPhoneOtpError("Verification Failed");
-      setPhoneOtp("");
-    }
-  }
-
-  function setOtpTimer() {
-    setMailOtpResend(false);
-    setPhoneOtpResend(false);
-    setTimeout(() => {
-      setMailOtpResend(true);
-      setPhoneOtpResend(true);
-    }, 60000);
-  }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -439,24 +314,14 @@ const PersonalInfo = () => {
               </label>
               <div className="flex gap-2">
                 <div className="relative mt-2 flex-1">
-                  <Controller
-                    control={control}
-                    name="email"
-                    render={({ field }) => (
-                      <input
-                        type="text"
-                        {...field}
-                        value={userEmail}
-                        onChange={(e) => {
-                          emailOnChange(e);
-                          field.onChange(e);
-                        }}
-                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-pink-600 sm:text-sm sm:leading-6"
-                      />
-                    )}
+                  <input
+                    type="text"
+                    {...register("email")}
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-pink-600 sm:text-sm sm:leading-6"
                   />
-                  {(errors["email"] || errors["emailverified"]) && (
-                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
+
+                  {errors["email"] && (
+                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center">
                       <ExclamationCircleIcon
                         className="h-5 w-5 text-red-500"
                         aria-hidden="true"
@@ -464,79 +329,10 @@ const PersonalInfo = () => {
                     </div>
                   )}
                 </div>
-                <div className="self-center mt-2">
-                  {emailverified != "" ? (
-                    <CheckBadgeIcon
-                      className="h-5 w-5 text-green-500"
-                      aria-hidden="true"
-                    />
-                  ) : otpEmailMode ? (
-                    <ExclamationTriangleIcon
-                      className="h-5 w-5 text-red-500"
-                      aria-hidden="true"
-                    />
-                  ) : mailOtpFetching ? (
-                    <DataLoader size="xs" />
-                  ) : (
-                    <Link
-                      href="#"
-                      onClick={sendMailOtp}
-                      className="text-sm font-semibold text-pink-600 hover:text-pink-500"
-                    >
-                      Verify
-                    </Link>
-                  )}
-                </div>
               </div>
-              {otpEmailMode && (
-                <div className="py-2 text-sm">
-                  <div className="py-4 text-right">
-                    {mailOtpResend ? (
-                      mailOtpFetching ? (
-                        <DataLoader size="xs" />
-                      ) : (
-                        <Link
-                          href="#"
-                          onClick={sendMailOtp}
-                          className="text-sm font-semibold text-pink-600 hover:text-pink-500"
-                        >
-                          Resend
-                        </Link>
-                      )
-                    ) : (
-                      <OtpTimer />
-                    )}
-                  </div>
-                  <div className="flex items-baseline gap-2">
-                    <input
-                      type="text"
-                      value={mailOtp}
-                      onChange={(e) => setMailOtp(e.target.value)}
-                      placeholder="Otp to verify email"
-                      className="flex-1 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-pink-600 sm:text-sm sm:leading-6"
-                    />
-                    <button
-                      type="button"
-                      onClick={verifyEmail}
-                      className="rounded-md border border-pink-600 px-3 py-2 text-sm font-semibold text-pink-600 shadow-sm hover:bg-gray-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink-600"
-                    >
-                      {mailOtpVerifying ? "Verifying..." : "Verify"}
-                    </button>
-                  </div>
-                </div>
-              )}
-              {mailOtpError === "" ? null : (
+              {errors["email"] && (
                 <p className="mt-2 text-sm text-red-600" id="email-error">
-                  {mailOtpError}
-                </p>
-              )}
-              {(errors["email"] || errors["emailverified"]) && (
-                <p className="mt-2 text-sm text-red-600" id="email-error">
-                  {errors["email"]
-                    ? errors["email"].message
-                    : errors["emailverified"]
-                    ? errors["emailverified"].message
-                    : null}
+                  {errors["email"].message}
                 </p>
               )}
             </div>
@@ -558,28 +354,16 @@ const PersonalInfo = () => {
                       id="phonecode"
                       {...register("phonecode")}
                       className="h-full rounded-md border-0 bg-transparent py-0 pl-3 pr-7 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-pink-600 sm:text-sm"
-                      defaultValue="+91"
                     >
                       <option value="+91">+91</option>
                     </select>
                   </div>
-                  <Controller
-                    control={control}
-                    name="phone"
-                    render={({ field }) => (
-                      <input
-                        type="text"
-                        {...field}
-                        value={userPhone}
-                        onChange={(e) => {
-                          phoneOnChange(e);
-                          field.onChange(e);
-                        }}
-                        className="block pl-20 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-pink-600 sm:text-sm sm:leading-6"
-                      />
-                    )}
+                  <input
+                    type="text"
+                    {...register("phone")}
+                    className="block pl-20 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-pink-600 sm:text-sm sm:leading-6"
                   />
-                  {(errors["phone"] || errors["phoneverified"]) && (
+                  {errors["phone"] && (
                     <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
                       <ExclamationCircleIcon
                         className="h-5 w-5 text-red-500"
@@ -588,79 +372,11 @@ const PersonalInfo = () => {
                     </div>
                   )}
                 </div>
-                <div className="self-center mt-2">
-                  {phoneverified != "" ? (
-                    <CheckBadgeIcon
-                      className="h-5 w-5 text-green-500"
-                      aria-hidden="true"
-                    />
-                  ) : otpPhoneMode ? (
-                    <ExclamationTriangleIcon
-                      className="h-5 w-5 text-red-500"
-                      aria-hidden="true"
-                    />
-                  ) : phoneOtpFetching ? (
-                    <DataLoader size="xs" />
-                  ) : (
-                    <Link
-                      href="#"
-                      onClick={sendPhoneNoOtp}
-                      className="text-sm font-semibold text-pink-600 hover:text-pink-500"
-                    >
-                      Verify
-                    </Link>
-                  )}
-                </div>
               </div>
-              {otpPhoneMode && (
-                <div className="py-2 text-sm">
-                  <div className="py-4 text-right">
-                    {phoneOtpResend ? (
-                      phoneOtpFetching ? (
-                        <DataLoader size="xs" />
-                      ) : (
-                        <Link
-                          href="#"
-                          onClick={sendPhoneNoOtp}
-                          className="text-sm font-semibold text-pink-600 hover:text-pink-500"
-                        >
-                          Resend
-                        </Link>
-                      )
-                    ) : (
-                      <OtpTimer />
-                    )}
-                  </div>
-                  <div className="flex items-baseline gap-2">
-                    <input
-                      type="text"
-                      value={phoneOtp}
-                      onChange={(e) => setPhoneOtp(e.target.value)}
-                      placeholder="Otp to verify Phone"
-                      className="flex-1 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-pink-600 sm:text-sm sm:leading-6"
-                    />
-                    <button
-                      type="button"
-                      onClick={verifyPhone}
-                      className="rounded-md border border-pink-600 px-3 py-2 text-sm font-semibold text-pink-600 shadow-sm hover:bg-gray-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink-600"
-                    >
-                      {phoneOtpVerifying ? "Verifying..." : "Verify"}
-                    </button>
-                  </div>
-                </div>
-              )}
-              {phoneOtpError === "" ? null : (
+
+              {errors["phone"] && (
                 <p className="mt-2 text-sm text-red-600" id="email-error">
-                  {phoneOtpError}
-                </p>
-              )}
-              {(errors["phone"] || errors["phoneverified"]) && (
-                <p className="mt-2 text-sm text-red-600" id="email-error">
-                  {errors["phone"]
-                    ? errors["phone"].message
-                    : errors["phoneverified"]
-                    ? errors["phoneverified"].message
-                    : null}
+                  {errors["phone"].message}
                 </p>
               )}
             </div>

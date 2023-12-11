@@ -2,26 +2,53 @@
 import DataLoader from "@/app/components/DataLoader";
 import { getCandidateById } from "@/app/data/agent/candidate";
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
+import Link from "next/link";
+import React, { useState } from "react";
+import EditContactAddress from "./editcontactaddress";
 
 const ContactAddress = ({ candidateId }) => {
-  const { data: candidate, isLoading } = useQuery({
+  const [editMode, setEditMode] = useState(false);
+
+  const {
+    data: candidate,
+    isLoading,
+    refetch: refetchData,
+  } = useQuery({
     queryKey: ["candidate", candidateId],
     queryFn: () => getCandidateById(candidateId),
   });
-  console.log("candiate", candidate);
+
+  async function completeEdit() {
+    refetchData();
+    setEditMode(false);
+  }
 
   return (
     <div>
       <h2 className="text-base font-semibold leading-7 text-gray-900">
         Address
       </h2>
-      <p className="mt-1 text-sm leading-6 text-gray-500">Contact Address</p>
+      <div className="flex items-center justify-between">
+        <p className="mt-1 text-sm leading-6 text-gray-500">Contact Address</p>
+        {isLoading ? null : editMode ? null : (
+          <button
+            onClick={() => setEditMode(true)}
+            className="text-sm rounded-md bg-white font-medium text-pink-600 hover:text-pink-500"
+          >
+            Update
+          </button>
+        )}
+      </div>
       <dl className="mt-6 space-y-6 divide-y divide-gray-100 border-t border-gray-200 text-sm leading-6">
         {isLoading ? (
           <div className="pt-6 flex justify-center">
             <DataLoader />
           </div>
+        ) : editMode ? (
+          <EditContactAddress
+            completeEdit={completeEdit}
+            candidate={candidate}
+          />
         ) : (
           <>
             <div className="pt-6 sm:flex">

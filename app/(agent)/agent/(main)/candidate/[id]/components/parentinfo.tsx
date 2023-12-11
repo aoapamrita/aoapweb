@@ -9,7 +9,6 @@ const ParentInfo = ({ candidateId }) => {
     queryKey: ["candidate", "parent", candidateId],
     queryFn: () => getCandidateParentById(candidateId),
   });
-  console.log("parentInfo", parentInfo);
 
   return (
     <div>

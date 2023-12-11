@@ -52,7 +52,10 @@ const navigation = [
   },
   {
     name: "Agents",
-    children: [{ name: "Agent", href: "/admin/agents" }],
+    children: [
+      { name: "Stats", href: "/admin/agents" },
+      { name: "List", href: "/admin/agents/list" },
+    ],
   },
   {
     name: "Counsellors",

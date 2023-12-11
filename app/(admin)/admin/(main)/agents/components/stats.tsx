@@ -104,8 +104,8 @@ export default function Stats() {
               <div>
                 <p className="text-base text-gray-900">
                   <span className="font-semibold">Pending :</span>{" "}
-                  {agentstats.applications.registered -
-                    agentstats.applications.applied}
+                  {agentstats.applications.applied -
+                    agentstats.applications.registered}
                 </p>
                 <p className="text-base text-gray-900">
                   <span className="font-semibold">Registered :</span>{" "}
