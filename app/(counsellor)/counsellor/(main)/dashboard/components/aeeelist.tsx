@@ -41,27 +41,25 @@ const AeeeList = ({ results }) => {
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200">
-            {results.map((application) => (
-              <tr key={application.id}>
+            {results.map((registration) => (
+              <tr key={registration.id}>
                 <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                  {application.candidate.fullname
-                    ? application.candidate.fullname
+                  {registration.examapplication.candidate.fullname
+                    ? registration.examapplication.candidate.fullname
                     : "Nil"}
                 </td>
                 <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                  {application.reference}
+                  {registration.examapplication.reference}
                 </td>
                 <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                  {application.Registration.length > 0
-                    ? application.Registration[0].registrationNo
-                    : "Not Registered"}
+                  {registration.registrationNo}
                 </td>
                 <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                  {application.EntrancePayments.length}
+                  {registration.examapplication.EntrancePayments.length}
                 </td>
                 <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                   <Link
-                    href={`/counsellor/candidate/${application.candidate.id}`}
+                    href={`/counsellor/candidate/${registration.examapplication.candidate.id}`}
                     className="font-semibold text-pink-600"
                   >
                     View
