@@ -12,11 +12,20 @@ import { ExclamationCircleIcon } from "@heroicons/react/20/solid";
 import { updateCandidateById } from "@/app/data/admin/candidate";
 
 const AddressSchema = yup.object().shape({
-  stateId: yup.number().required("Please select State"),
-  districtId: yup.number().required("Please select District"),
-  cityId: yup.number().required("Please select City"),
+  stateId: yup.string().test({
+    test: (value) => value !== "0",
+    message: "Please select State",
+  }),
+  districtId: yup.string().test({
+    test: (value) => value !== "0",
+    message: "Please select District",
+  }),
+  cityId: yup.string().test({
+    test: (value) => value !== "0",
+    message: "Please select City",
+  }),
   otherCity: yup.string().when("cityId", {
-    is: 9999999999,
+    is: "9999999999",
     then: (schema) => schema.required("City Name is required"),
     otherwise: (schema) => schema,
   }),
@@ -26,8 +35,14 @@ const EditContactAddress = ({ completeEdit, candidate }) => {
   const [lstateId, setStateId] = useState(candidate.stateId);
   const [ldistrictId, setDistrictId] = useState(candidate.districtId);
   const [lcityId, setCityId] = useState(
-    candidate.cityId ? candidate.cityId : 9999999999
+    candidate.cityId
+      ? candidate.cityId
+      : candidate.otherCity != ""
+      ? "9999999999"
+      : null
   );
+
+  console.log("cityid", lcityId);
 
   const { data: states, isLoading: statesLoading } = useQuery({
     queryKey: ["states"],
@@ -54,6 +69,7 @@ const EditContactAddress = ({ completeEdit, candidate }) => {
     control,
     clearErrors,
     setError,
+    setValue,
     formState: { errors, isSubmitting },
   } = useForm({
     resolver: async (data, context, options) => {
@@ -69,7 +85,14 @@ const EditContactAddress = ({ completeEdit, candidate }) => {
 
   const onSubmit = async (data) => {
     console.log("submit data", data);
-    const res = await updateCandidateById(candidate.id, data);
+    let fulldata = {
+      ...data,
+      stateId: parseInt(data.stateId),
+      districtId: parseInt(data.districtId),
+      cityId: parseInt(data.cityId),
+    };
+
+    const res = await updateCandidateById(candidate.id, fulldata);
     completeEdit();
   };
   return (
@@ -93,7 +116,7 @@ const EditContactAddress = ({ completeEdit, candidate }) => {
             which you belong to
           </p>
           <div className="mt-2">
-            {!states ? (
+            {statesLoading ? (
               <select className="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-pink-600 text-sm sm:leading-6">
                 <option value="0">--Select--</option>
               </select>
@@ -106,9 +129,12 @@ const EditContactAddress = ({ completeEdit, candidate }) => {
                   <select
                     defaultValue={lstateId}
                     onChange={(e) => {
-                      setStateId(parseInt(e.target.value));
+                      setStateId(e.target.value);
                       setDistrictId(null);
                       setCityId(null);
+                      setValue("districtId", "0");
+                      setValue("cityId", "0");
+                      setValue("otherCity", "");
                       field.onChange(parseInt(e.target.value));
                     }}
                     className="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-pink-600 text-sm sm:leading-6"
@@ -134,7 +160,7 @@ const EditContactAddress = ({ completeEdit, candidate }) => {
 
         <div
           className={clsx(
-            lcityId === 9999999999 ? "sm:col-span-2" : "sm:col-span-3",
+            lcityId === "9999999999" ? "sm:col-span-2" : "sm:col-span-3",
             "sm:col-start-1"
           )}
         >
@@ -152,7 +178,7 @@ const EditContactAddress = ({ completeEdit, candidate }) => {
             ) : null}
           </label>
           <div className="mt-2">
-            {!districts ? (
+            {districtsFetching ? (
               <select className="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-pink-600 text-sm sm:leading-6">
                 <option value="0">--Select--</option>
               </select>
@@ -165,8 +191,10 @@ const EditContactAddress = ({ completeEdit, candidate }) => {
                   <select
                     defaultValue={ldistrictId}
                     onChange={(e) => {
-                      setDistrictId(parseInt(e.target.value));
+                      setDistrictId(e.target.value);
                       setCityId(null);
+                      setValue("cityId", "0");
+                      setValue("otherCity", "");
                       field.onChange(parseInt(e.target.value));
                     }}
                     className="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-pink-600 text-sm sm:leading-6"
@@ -192,7 +220,7 @@ const EditContactAddress = ({ completeEdit, candidate }) => {
 
         <div
           className={clsx(
-            lcityId === 9999999999 ? "sm:col-span-2" : "sm:col-span-3"
+            lcityId === "9999999999" ? "sm:col-span-2" : "sm:col-span-3"
           )}
         >
           <label
@@ -209,7 +237,7 @@ const EditContactAddress = ({ completeEdit, candidate }) => {
             ) : null}
           </label>
           <div className="mt-2">
-            {!cities ? (
+            {citiesFetching ? (
               <select className="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-pink-600 text-sm sm:leading-6">
                 <option value="0">--Select--</option>
               </select>
@@ -222,7 +250,8 @@ const EditContactAddress = ({ completeEdit, candidate }) => {
                   <select
                     defaultValue={lcityId}
                     onChange={(e) => {
-                      setCityId(parseInt(e.target.value));
+                      setCityId(e.target.value);
+                      setValue("otherCity", "");
                       field.onChange(parseInt(e.target.value));
                     }}
                     className="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-pink-600 text-sm sm:leading-6"
@@ -248,7 +277,9 @@ const EditContactAddress = ({ completeEdit, candidate }) => {
         </div>
 
         <div
-          className={clsx(lcityId === 9999999999 ? "sm:col-span-2" : "hidden")}
+          className={clsx(
+            lcityId === "9999999999" ? "sm:col-span-2" : "hidden"
+          )}
         >
           <label
             htmlFor="fullname"
@@ -257,20 +288,11 @@ const EditContactAddress = ({ completeEdit, candidate }) => {
             City Name
           </label>
           <div className="relative mt-2">
-            <Controller
+            <input
               defaultValue={candidate.otherCity}
-              name="otherCity"
-              control={control}
-              render={({ field }) => (
-                <input
-                  defaultValue={candidate.otherCity}
-                  type="text"
-                  onChange={(e) => {
-                    field.onChange(e.target.value);
-                  }}
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-pink-600 text-sm sm:leading-6"
-                />
-              )}
+              type="text"
+              {...register("otherCity")}
+              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-pink-600 text-sm sm:leading-6"
             />
 
             {errors["otherCity"] && (
