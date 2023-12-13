@@ -39,6 +39,7 @@ export default function City() {
   const [actionQueue, setActionQueue] = useState([]);
   const [editId, setEditId] = useState(0);
   const [editName, setEditName] = useState("");
+  const [editCode, setEditCode] = useState("");
   const [editError, setEditError] = useState(null);
   const [stateId, setStateId] = useState(null);
   const [districtId, setDistrictId] = useState(null);
@@ -146,19 +147,36 @@ export default function City() {
     setEditError(null);
     setEditId(item.id);
     setEditName(item.name);
+    setEditCode(item.code);
   }
 
   function cancelEdit() {
     setEditId(0);
     setEditError(null);
     setEditName("");
+    setEditCode("");
   }
 
   function saveEdit() {
-    if (editName != "") {
-      editMutate({ id: editId, input: { name: editName, districtId } });
+    let errors = {};
+    setEditError(errors);
+
+    if (editName === "") {
+      errors["name"] = { message: "Name is required" };
+    }
+
+    const code = parseInt(editCode);
+
+    if (isNaN(code) || code < 0) {
+      errors["code"] = { message: "Enter Valid Code" };
+    }
+
+    let input = { name: editName, code };
+
+    if (Object.keys(errors).length === 0) {
+      editMutate({ id: editId, input: { name: editName, code } });
     } else {
-      setEditError({ name: { message: "Name is required" } });
+      setEditError(errors);
     }
   }
 
@@ -166,11 +184,9 @@ export default function City() {
     setActionQueue((state) => [...state, id]);
   }
 
-  console.log(editError);
-
   return (
     <>
-      <div className="px-4 sm:px-6 lg:px-8 max-w-2xl">
+      <div className="px-4 sm:px-6 lg:px-8 max-w-7xl">
         <div className="space-y-5">
           <h2 className="text-base font-semibold leading-7 text-gray-900">
             City
@@ -275,7 +291,7 @@ export default function City() {
             </form>
           </div>
         </div>
-        <div className="-mx-4 mt-10 ring-1 ring-gray-300 sm:mx-0 sm:rounded-lg max-w-2xl">
+        <div className="-mx-4 mt-10 ring-1 ring-gray-300 sm:mx-0 sm:rounded-lg max-w-7xl">
           {districtsFetching ? (
             <div>
               <div className="py-6 flex justify-center">
@@ -296,7 +312,12 @@ export default function City() {
                   >
                     Name
                   </th>
-
+                  <th
+                    scope="col"
+                    className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6"
+                  >
+                    Code
+                  </th>
                   <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6">
                     <span className="sr-only">Actions</span>
                   </th>
@@ -330,14 +351,49 @@ export default function City() {
                               </div>
                             )}
                           </div>
-                          {editError && editError["name"] && (
-                            <p
-                              className="mt-2 text-sm text-red-600"
-                              id="email-error"
-                            >
-                              {editError["name"].message}
-                            </p>
+                          <p
+                            className="mt-2 text-sm text-red-600 h-3"
+                            id="email-error"
+                          >
+                            {editError && editError["name"]
+                              ? editError["name"].message
+                              : ""}
+                          </p>
+                          {item.id !== 0 ? (
+                            <div className="absolute -top-px left-6 right-0 h-px bg-gray-200" />
+                          ) : null}
+                        </td>
+                        <td
+                          className={classNames(
+                            item.id === 0 ? "" : "border-t border-transparent",
+                            "relative py-4 pl-4 pr-3 text-sm sm:pl-6"
                           )}
+                        >
+                          <div className="relative flex-1">
+                            <input
+                              type="text"
+                              value={editCode}
+                              onChange={(e) => setEditCode(e.target.value)}
+                              placeholder="Enter Code"
+                              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-pink-600 sm:text-sm sm:leading-6"
+                            />
+                            {editError && editError["code"] && (
+                              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
+                                <ExclamationCircleIcon
+                                  className="h-5 w-5 text-red-500"
+                                  aria-hidden="true"
+                                />
+                              </div>
+                            )}
+                          </div>
+                          <p
+                            className="mt-2 text-sm text-red-600 h-3"
+                            id="email-error"
+                          >
+                            {editError && editError["code"]
+                              ? editError["code"].message
+                              : ""}
+                          </p>
                           {item.id !== 0 ? (
                             <div className="absolute -top-px left-6 right-0 h-px bg-gray-200" />
                           ) : null}
@@ -396,6 +452,19 @@ export default function City() {
                         >
                           <div className="font-medium text-gray-900">
                             {item.name}
+                          </div>
+                          {item.id !== 0 ? (
+                            <div className="absolute -top-px left-6 right-0 h-px bg-gray-200" />
+                          ) : null}
+                        </td>
+                        <td
+                          className={classNames(
+                            item.id === 0 ? "" : "border-t border-transparent",
+                            "relative py-4 pl-4 pr-3 text-sm sm:pl-6"
+                          )}
+                        >
+                          <div className="font-medium text-gray-900">
+                            {item.code}
                           </div>
                           {item.id !== 0 ? (
                             <div className="absolute -top-px left-6 right-0 h-px bg-gray-200" />
