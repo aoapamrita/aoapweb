@@ -107,7 +107,17 @@ const PersonalInfo = ({ candidateId }) => {
                   field="dob"
                   value={candidate.dob}
                   schema={yup.object().shape({
-                    dob: yup.string().required("DOB is required"),
+                    dob: yup
+                      .date()
+                      .required("DOB is required")
+                      .min(
+                        new Date("2002-12-31"),
+                        "DOB must be on or after January 1, 2003"
+                      )
+                      .max(
+                        new Date("2007-12-31"),
+                        "DOB must be on or before December 31, 2007"
+                      ),
                   })}
                 />
               </dd>

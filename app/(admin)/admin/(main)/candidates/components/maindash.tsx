@@ -1,13 +1,9 @@
 "use client";
 import { searchCandidate } from "@/app/data/search/candidate";
-import React, { useRef, useState } from "react";
-import v from "voca";
+import React, { useState } from "react";
 import CandidateList from "./candidatelist";
-import ApplnCandidates from "./applncandidates";
-import {
-  searchApplication,
-  searchRegistration,
-} from "@/app/data/search/application";
+
+import { searchRegistration } from "@/app/data/search/application";
 import AeeeList from "./aeeelist";
 
 const searchOptions = {

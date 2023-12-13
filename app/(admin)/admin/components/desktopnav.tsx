@@ -22,6 +22,7 @@ const navigation = [
       { name: "Exam", href: "/admin/reports/exam" },
       { name: "Exam City", href: "/admin/reports/examcity" },
       { name: "Referer", href: "/admin/reports/referer" },
+      { name: "Exam Vendor", href: "/admin/reports/examvendor" },
     ],
   },
   {

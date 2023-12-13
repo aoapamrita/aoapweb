@@ -4,6 +4,7 @@ import ContactAddress from "./contactaddress";
 import JeeInfo from "./jeeinfo";
 import ParentInfo from "./parentinfo";
 import PersonalInfo from "./personalinfo";
+import PlusTwo from "./plustwo";
 
 const GeneralWrapper = ({ candidateId }) => {
   return (
@@ -11,6 +12,7 @@ const GeneralWrapper = ({ candidateId }) => {
       <PersonalInfo candidateId={candidateId} />
       <ContactAddress candidateId={candidateId} />
       <ParentInfo candidateId={candidateId} />
+      <PlusTwo candidateId={candidateId} />
       <AeeeInfo candidateId={candidateId} />
       <JeeInfo candidateId={candidateId} />
     </div>

@@ -57,7 +57,9 @@ const CandidateList = ({ results }) => {
                   {candidate.email ? candidate.email : "Nil"}
                 </td>
                 <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                  {candidate.Onboarding.status ? "Completed" : "Pending"}
+                  {candidate.Onboarding && candidate.Onboarding.status
+                    ? "Completed"
+                    : "Pending"}
                 </td>
                 <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                   <Link
