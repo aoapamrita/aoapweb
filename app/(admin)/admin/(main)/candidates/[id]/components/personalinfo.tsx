@@ -101,7 +101,7 @@ const PersonalInfo = ({ candidateId }) => {
                 Date of Birth
               </dt>
               <dd className="mt-1 flex justify-between gap-x-6 sm:mt-0 sm:flex-auto">
-                <ValueDateDisplay
+                {/* <ValueDateDisplay
                   refetchData={handleRefetchData}
                   candidateId={candidate.id}
                   field="dob"
@@ -119,7 +119,7 @@ const PersonalInfo = ({ candidateId }) => {
                         "DOB must be on or before December 31, 2007"
                       ),
                   })}
-                />
+                /> */}
               </dd>
             </div>
             <div className="pt-6 sm:flex">
@@ -127,7 +127,7 @@ const PersonalInfo = ({ candidateId }) => {
                 Gender
               </dt>
               <dd className="mt-1 flex justify-between gap-x-6 sm:mt-0 sm:flex-auto">
-                <ValueSelectDisplay
+                {/* <ValueSelectDisplay
                   refetchData={handleRefetchData}
                   candidateId={candidate.id}
                   field="genderId"
@@ -137,7 +137,7 @@ const PersonalInfo = ({ candidateId }) => {
                   })}
                   queryKey="gender"
                   queryFn={getGender}
-                />
+                /> */}
               </dd>
             </div>
             <div className="pt-6 sm:flex">
@@ -145,7 +145,7 @@ const PersonalInfo = ({ candidateId }) => {
                 Social Status
               </dt>
               <dd className="mt-1 flex justify-between gap-x-6 sm:mt-0 sm:flex-auto">
-                <ValueSelectDisplay
+                {/* <ValueSelectDisplay
                   refetchData={handleRefetchData}
                   candidateId={candidate.id}
                   field="socialstatusId"
@@ -157,7 +157,7 @@ const PersonalInfo = ({ candidateId }) => {
                   })}
                   queryKey="socialstatus"
                   queryFn={getSocialStatus}
-                />
+                /> */}
               </dd>
             </div>
             <div className="pt-6 sm:flex">
@@ -208,7 +208,7 @@ const PersonalInfo = ({ candidateId }) => {
                 How did you come to know about Amrita?
               </dt>
               <dd className="mt-1 flex justify-between gap-x-6 sm:mt-0 sm:flex-auto">
-                <ValueSelectDisplay
+                {/* <ValueSelectDisplay
                   refetchData={handleRefetchData}
                   candidateId={candidate.id}
                   field="infosourceId"
@@ -218,7 +218,7 @@ const PersonalInfo = ({ candidateId }) => {
                   })}
                   queryKey="infosource"
                   queryFn={getInfoSource}
-                />
+                /> */}
               </dd>
             </div>
           </>
