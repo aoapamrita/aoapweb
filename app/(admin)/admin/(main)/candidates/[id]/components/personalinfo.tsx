@@ -65,19 +65,19 @@ const PersonalInfo = ({ candidateId }) => {
             <div className="pt-6 sm:flex">
               <dt className="font-medium text-gray-900 sm:w-64 sm:flex-none sm:pr-6">
                 <p className="mb-2">Photo</p>
-                <ValuePhotoDisplay
+                {/* <ValuePhotoDisplay
                   candidateId={candidate.id}
                   value={candidate.photoid}
                   refetchData={handleRefetchData}
-                />
+                /> */}
               </dt>
               <dd className="mt-1 gap-x-6 sm:mt-0 sm:flex-auto">
                 <p className="mb-2">Signature</p>
-                <ValueSignDisplay
+                {/* <ValueSignDisplay
                   candidateId={candidate.id}
                   value={candidate.signid}
                   refetchData={handleRefetchData}
-                />
+                /> */}
               </dd>
             </div>
             <div className="pt-6 sm:flex">
