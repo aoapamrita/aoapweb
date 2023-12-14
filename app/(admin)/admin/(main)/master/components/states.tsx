@@ -120,6 +120,7 @@ export default function States() {
     setEditId(0);
     setEditError(null);
     setEditName("");
+    setEditCode("")
   }
 
   function saveEdit() {

@@ -46,7 +46,7 @@ const ListUsers = ({ examId }) => {
         </thead>
         <tbody>
           {candidates.map((candidate, rowIdx) => (
-            <UserRow candidate={candidate} rowId={rowIdx} />
+            <UserRow candidate={candidate} rowId={rowIdx} examId={examId} />
           ))}
         </tbody>
       </table>

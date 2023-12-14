@@ -3,7 +3,11 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-const UserRow = ({ candidate, rowId }) => {
+const UserRow = ({ candidate, rowId, examId }) => {
+
+const verifyUser = async(req, res)=>{
+    
+}
   return (
     <tr key={candidate.id}>
       <td
@@ -41,6 +45,7 @@ const UserRow = ({ candidate, rowId }) => {
       >
         <button
           type="button"
+          onClick={()=>verifyUser()}
           className="inline-flex items-center rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:bg-white"
         >
           Verify<span className="sr-only">, {candidate.name}</span>
