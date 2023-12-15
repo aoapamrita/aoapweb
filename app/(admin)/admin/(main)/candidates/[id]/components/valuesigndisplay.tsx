@@ -9,7 +9,7 @@ const ValueSignDisplay = ({ candidateId, value, refetchData }) => {
     refetchData();
     setEditMode(false);
   }
-
+  console.log("sign value", value);
   return (
     <>
       {editMode ? (
@@ -19,7 +19,7 @@ const ValueSignDisplay = ({ candidateId, value, refetchData }) => {
           <CldPicture
             width="500"
             height="100"
-            src={value}
+            src={value ? value : ""}
             sizes="100vw"
             alt="Description of my image"
             className="h-24 w-48 flex-none rounded-lg object-contain border border-gray-200"

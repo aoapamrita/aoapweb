@@ -973,7 +973,10 @@ const PersonalInfo = ({ showNext, user }) => {
                   options={{
                     sources: ["local"],
                     multiple: false,
-                    maxFiles: 5,
+                    maxFiles: 1,
+                    cropping: true,
+                    clientAllowedFormats: ["image"],
+                    maxFileSize: 2000000,
                   }}
                   onUpload={(result, widget) => {
                     if (result.event !== "success") return;
@@ -1027,7 +1030,10 @@ const PersonalInfo = ({ showNext, user }) => {
                   options={{
                     sources: ["local"],
                     multiple: false,
-                    maxFiles: 5,
+                    maxFiles: 1,
+                    cropping: true,
+                    clientAllowedFormats: ["image"],
+                    maxFileSize: 2000000,
                   }}
                   onUpload={(result, widget) => {
                     if (result.event !== "success") return;

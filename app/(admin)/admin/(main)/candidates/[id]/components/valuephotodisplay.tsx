@@ -10,6 +10,8 @@ const ValuePhotoDisplay = ({ candidateId, value, refetchData }) => {
     setEditMode(false);
   }
 
+  console.log("photovalue", value);
+
   return (
     <>
       {editMode ? (
@@ -19,7 +21,7 @@ const ValuePhotoDisplay = ({ candidateId, value, refetchData }) => {
           <CldPicture
             width="150"
             height="250"
-            src={value}
+            src={value ? value : ""}
             sizes="100vw"
             alt="Description of my image"
             className="h-24 w-24 flex-none rounded-lg bg-gray-800 object-cover"

@@ -1,8 +1,9 @@
 "use client";
 import React from "react";
-import Vendor from "../components/vendor";
+import ExamCentre from "./components/examcentre";
+
 const Page = () => {
-  return <Vendor />;
+  return <ExamCentre />;
 };
 
 export default Page;

@@ -22,7 +22,6 @@ const navigation = [
       { name: "Exam", href: "/admin/reports/exam" },
       { name: "Exam City", href: "/admin/reports/examcity" },
       { name: "Referer", href: "/admin/reports/referer" },
-      { name: "Exam Vendor", href: "/admin/reports/examvendor" },
     ],
   },
   {
@@ -61,6 +60,13 @@ const navigation = [
   {
     name: "Counsellors",
     children: [{ name: "Counsellor", href: "/admin/counsellors" }],
+  },
+  {
+    name: "Vendors",
+    children: [
+      { name: "Exam Centres", href: "/admin/vendors/centres" },
+      { name: "Sync Users", href: "/admin/vendors/usersync" },
+    ],
   },
 ];
 
