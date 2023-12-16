@@ -31,3 +31,16 @@ export async function getExamCityCityReport(id) {
     return data;
   }
 }
+
+export async function verifyCandidateSync(regno) {
+  try {
+    const { data } = await apiclient.get(
+      `/api/vendor/examcenter/usersync/${regno}`
+    );
+
+    return data;
+  } catch (error) {
+    const { data } = error.response;
+    return data;
+  }
+}
