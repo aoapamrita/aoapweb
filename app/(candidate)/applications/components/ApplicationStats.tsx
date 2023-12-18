@@ -64,10 +64,21 @@ export default function ApplicationStats({ application }) {
           )}
         </div>
         <div className="px-6 py-5 text-center text-sm font-medium">
-          <span className="text-gray-600">Admit Pending</span>
+          {application.Registration.length === 0 ? (
+            <span className="text-gray-600">Admin Card Pending</span>
+          ) : application.Registration[0].AdmitCard ? (
+            <Link
+              href={`/applications/${application.id}`}
+              className="font-medium text-pink-600 hover:text-pink-500"
+            >
+              Download Admit Card
+            </Link>
+          ) : (
+            <span className="text-gray-600">Admin Card Pending</span>
+          )}
         </div>
         <div className="px-6 py-5 text-center text-sm font-medium">
-          <span className="text-gray-600">Rank Published</span>
+          <span className="text-gray-600">Rank Not Published</span>
         </div>
       </div>
     </div>

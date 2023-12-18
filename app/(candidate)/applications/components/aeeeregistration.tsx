@@ -142,6 +142,49 @@ export default function AeeeRegistration({ application }) {
                 {application.exam.entrance.code.toUpperCase()}
               </dd>
             </div>
+            {registration.Slot ? (
+              <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                <dt className="text-sm font-medium leading-6 text-gray-900">
+                  Slot details
+                </dt>
+                <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+                  <p>Registration No : {registration.Slot.registrationNo}</p>
+                  <p>Exam Mode : {registration.Slot.examMode}</p>
+                  <p>
+                    Exam Date:{" "}
+                    {dayjs(registration.Slot.examDate).format("DD/MM/YYYY")}
+                  </p>
+                  <p>Exam Time: {registration.Slot.examTime}</p>
+                  <p>Selected City: {registration.Slot.selectedCityCode}</p>
+                </dd>
+              </div>
+            ) : null}
+            {registration.AdmitCard ? (
+              <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                <dt className="text-sm font-medium leading-6 text-gray-900">
+                  Admit Card details
+                </dt>
+                <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+                  <p>
+                    Registration No : {registration.AdmitCard.registrationNo}
+                  </p>
+                  <p>Exam Mode : {registration.AdmitCard.examMode}</p>
+                  <p>
+                    Exam Date:{" "}
+                    {dayjs(registration.AdmitCard.examDate).format(
+                      "DD/MM/YYYY"
+                    )}
+                  </p>
+                  <p>Exam Time: {registration.AdmitCard.examTime}</p>
+                  <p>Location Name: {registration.AdmitCard.locationName}</p>
+                  <p>
+                    Location Address: {registration.AdmitCard.locationAddress}
+                  </p>
+                  <p>Pincode: {registration.AdmitCard.pincode}</p>
+                  <p>PhoneNumber: {registration.AdmitCard.phoneNumber}</p>
+                </dd>
+              </div>
+            ) : null}
             <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
               <dt className="text-sm font-medium leading-6 text-gray-900">
                 City Preferences
@@ -193,23 +236,6 @@ export default function AeeeRegistration({ application }) {
                 )}
               </dd>
             </div>
-            {registration.Slot ? (
-              <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                <dt className="text-sm font-medium leading-6 text-gray-900">
-                  Slot details
-                </dt>
-                <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                  <p>Registration No : {registration.Slot.registrationNo}</p>
-                  <p>Exam Mode : {registration.Slot.examMode}</p>
-                  <p>
-                    Exam Date:{" "}
-                    {dayjs(registration.Slot.examDate).format("DD/MM/YYYY")}
-                  </p>
-                  <p>Exam Time: {registration.Slot.examTime}</p>
-                  <p>Selected City: {registration.Slot.selectedCityCode}</p>
-                </dd>
-              </div>
-            ) : null}
           </dl>
         </div>
         {registration ? (
