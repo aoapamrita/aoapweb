@@ -44,3 +44,16 @@ export async function verifyCandidateSync(regno) {
     return data;
   }
 }
+
+export async function verifyAllCandidates(examid) {
+  try {
+    const { data } = await apiclient.get(
+      `/api/vendor/examcenter/allusers/${examid}`
+    );
+
+    return data;
+  } catch (error) {
+    const { data } = error.response;
+    return data;
+  }
+}
