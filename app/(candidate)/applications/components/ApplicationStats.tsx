@@ -1,4 +1,5 @@
 import Link from "next/link";
+import SlotButton from "../../components/slotbutton";
 
 const stats = [
   {
@@ -44,14 +45,22 @@ export default function ApplicationStats({ application }) {
         </div>
       </div>
       <div className="grid grid-cols-1 divide-y divide-gray-200 border-t border-gray-200 bg-gray-50 sm:grid-cols-3 sm:divide-x sm:divide-y-0">
-        {stats.map((stat) => (
-          <div
-            key={stat.label}
-            className="px-6 py-5 text-center text-sm font-medium"
-          >
-            <span className="text-gray-600">{stat.label}</span>
-          </div>
-        ))}
+        <div className="px-6 py-5 text-center text-sm font-medium">
+          {/* <span className="text-gray-600">slot</span> */}
+          {application.Registration.length === 0 ? (
+            <span className="text-gray-600">slot</span>
+          ) : (
+            <SlotButton
+              registrationno={application.Registration[0].registrationNo}
+            />
+          )}
+        </div>
+        <div className="px-6 py-5 text-center text-sm font-medium">
+          <span className="text-gray-600">Admit Pending</span>
+        </div>
+        <div className="px-6 py-5 text-center text-sm font-medium">
+          <span className="text-gray-600">Rank Published</span>
+        </div>
       </div>
     </div>
   );
