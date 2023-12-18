@@ -32,3 +32,15 @@ export async function getAllCandidatesInfo() {
     return data;
   }
 }
+
+export async function getRegisteredUsersByExam(examid) {
+  try {
+    const { data } = await apiclient.get(
+      `/api/admin/reports/registered/${examid}`
+    );
+    return data;
+  } catch (error) {
+    const { data } = error.response;
+    return data;
+  }
+}
