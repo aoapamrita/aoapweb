@@ -8,6 +8,8 @@ import BreadCrumbs from "../../components/breadcrumbs";
 const Page = async ({ params }) => {
   let application = await getApplicationById({ applicationid: params.applnid });
 
+  console.log("page application", application);
+
   if (!application) {
     redirect("/applications");
   }
