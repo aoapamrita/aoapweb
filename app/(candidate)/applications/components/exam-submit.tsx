@@ -14,6 +14,8 @@ import { useRouter } from "next/navigation";
 import ApplicationConfirmation from "./applicationconfirmation";
 import { useState } from "react";
 import DataLoader from "@/app/components/DataLoader";
+import invokeAPI from "@/app/data/updateleadapi";
+import getCandidate from "@/app/data/getCandidate";
 
 export default function AeeeSubmit({ previousStep, step, application }) {
   const router = useRouter();
@@ -35,6 +37,11 @@ export default function AeeeSubmit({ previousStep, step, application }) {
     setShowConfirmation(true);
   }
 
+  const { data: candidate, isLoading: candidateLoading } = useQuery({
+    queryKey: ["candidate"],
+    queryFn: () => getCandidate(),
+  });
+
   async function handleApplicationAccept() {
     setShowConfirmation(false);
     setIsSubmitting(true);
@@ -42,6 +49,21 @@ export default function AeeeSubmit({ previousStep, step, application }) {
       applicationId: application.id,
       input: { status: "APPLIED" },
     });
+
+     //create  lead  API
+     const candid = candidate.id;
+     const uname = candidate.fullname;
+     let uphone = candidate.phone;
+     let email = candidate.email;
+     let source = candidate.infosource.name;
+ 
+     
+     const section = "Application Initiated";
+     const paystatus = "Unpaid";
+  await invokeAPI({email: email,name: uname, phone: uphone, section: section, paystatus: paystatus,source: source,candid: candid});
+ 
+ 
+ //create new lead  API
 
     router.refresh();
   }

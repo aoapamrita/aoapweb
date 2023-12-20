@@ -9,6 +9,7 @@ import signIn from "@/app/data/signin";
 import sendEmailOtp from "@/app/data/emailotp";
 import isValidPhone from "@/app/utilities/checkphone";
 import sendPhoneOtp from "@/app/data/phoneotp";
+import invokeAPI from "@/app/data/updateleadapi";
 
 const SignIn = () => {
   const [signInMode, setSignInMode] = useState(false);
@@ -80,6 +81,32 @@ const SignIn = () => {
             if (onboarding.status) {
               router.replace("/dashboard");
             } else {
+
+              console.log(onboarding.candidateId);
+
+              const uname = '';
+              let uphone = "";
+              let email = "";
+              const section = "Registration";
+              const source = "";
+              const paystatus = "";
+              const candid = onboarding.candidateId
+              
+              if (!isValidPhone(username)) {
+                      uphone = "";
+                     }else{
+                      uphone = username;
+                     }
+              
+                     if (!isValidEmail(username)) {
+                      email = "";
+                     }else{
+                      email = username;
+                     }
+                   
+                    await invokeAPI({email: email,name: uname, phone: uphone, section: section, paystatus: paystatus, source: source, candid: candid});
+
+
               router.replace("/onboarding");
             }
           }

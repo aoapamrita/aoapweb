@@ -12,6 +12,8 @@ import { Spinner } from "flowbite-react";
 import sendWelcome from "@/app/data/admin/sendwelcome";
 import { ExclamationCircleIcon } from "@heroicons/react/24/outline";
 import { clsx } from "clsx";
+import getCandidate from "@/app/data/getCandidate";
+import invokeAPI from "@/app/data/updateleadapi";
 
 const AcademicInfoSchema = yup.object().shape({
   stateId: yup.number().required("Please select State"),
@@ -29,6 +31,11 @@ const AcademicInfo = () => {
   const { data: states, isLoading: statesLoading } = useQuery({
     queryKey: ["states"],
     queryFn: () => getStates(),
+  });
+
+  const { data: candidate, isLoading: candidateLoading } = useQuery({
+    queryKey: ["candidate"],
+    queryFn: () => getCandidate(),
   });
 
   const {
@@ -56,6 +63,18 @@ const AcademicInfo = () => {
     const onboarding = await updateOnboarding({
       data: { status: true },
     });
+
+    console.log(candidate.id);
+
+    const candid = candidate.id;
+    const uname = candidate.fullname;
+    let uphone = candidate.phone;
+    let email = candidate.email;
+    const source = candidate.infosource.name;
+    const section = "Personal Details";
+    const paystatus = "Unpaid";
+ await invokeAPI({email: email,name: uname, phone: uphone, section: section, paystatus: paystatus,source :source,candid: candid});
+
 
     const mail = await sendWelcome();
     console.log(mail);
