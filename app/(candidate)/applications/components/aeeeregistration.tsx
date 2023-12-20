@@ -138,13 +138,10 @@ export default function AeeeRegistration({ application }) {
     queryFn: () => getCandidate(),
   });
 
-  
+  {/* Application form PDF download function */}
   const downloadPDF = ({}) => {
-
    const element = document.getElementById('hidden-application-form');
-
    element.style.display = 'block';
-
     html2pdf(element, {
       margin: 10,
       filename: 'Application-form.pdf',
@@ -254,6 +251,7 @@ export default function AeeeRegistration({ application }) {
         )}
       </div>
 
+      {/* Application form PDF design */} 
       <div className="hidden" id="hidden-application-form">
       <div id="application-form">             
        <div className="form-logo">
@@ -264,8 +262,9 @@ export default function AeeeRegistration({ application }) {
                 alt="Amrita Vishwa Vidyapeetham"
             />    
         </div>
-        <div className='form-reg'>
-            <p><BarcodeComponent number={registration.registrationNo}  /></p>
+        <div className='form-reg'> 
+            {/* Barcode generation from register number */}
+            <p><BarcodeComponent number={registration?.registrationNo}  /></p>
         </div>
         <div className="form-image">
             <CldPicture
@@ -328,21 +327,21 @@ export default function AeeeRegistration({ application }) {
                 <p className='form-end'>Place: </p>
                 <p className='form-end'>Date:</p>
                 <div className="form-signature pr-8">
-                        <div className="signature-image">
-                            <CldPicture
-                                src={candidate?.signid}
-                                width="150"
-                                height="150"
-                                alt="Signature of Student"
-                                className="mx-auto mb-6"
-                            />
-                            <p className='sign-text'>Signature of the Candidate</p>
-                        </div>
+                          <div className="signature-image">
+                              <CldPicture
+                                  src={candidate?.signid}
+                                  width="150"
+                                  height="150"
+                                  alt="Signature of Student"
+                                  className="mx-auto mb-6"
+                              />
+                              <p className='sign-text'>Signature of the Candidate</p>
+                          </div>
                 </div>
         </div>
         
 
-    </div>
+      </div>
       </div>
       
        
@@ -353,4 +352,4 @@ export default function AeeeRegistration({ application }) {
     if (!dateString) return '';
     return format(new Date(dateString), "MMMM dd, yyyy h:mm a");
   }
-}
+};
