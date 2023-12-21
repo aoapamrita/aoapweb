@@ -1,4 +1,5 @@
 import Link from "next/link";
+import SlotButton from "../../components/slotbutton";
 
 const stats = [
   {
@@ -10,6 +11,8 @@ const stats = [
 ];
 
 export default function ApplicationStats({ application }) {
+  console.log("application details", application);
+
   return (
     <div className="overflow-hidden rounded-lg bg-white shadow">
       <h2 className="sr-only" id="profile-overview-title">
@@ -44,14 +47,39 @@ export default function ApplicationStats({ application }) {
         </div>
       </div>
       <div className="grid grid-cols-1 divide-y divide-gray-200 border-t border-gray-200 bg-gray-50 sm:grid-cols-3 sm:divide-x sm:divide-y-0">
-        {stats.map((stat) => (
-          <div
-            key={stat.label}
-            className="px-6 py-5 text-center text-sm font-medium"
-          >
-            <span className="text-gray-600">{stat.label}</span>
-          </div>
-        ))}
+        <div className="px-6 py-5 text-center text-sm font-medium">
+          {application.Registration.length === 0 ? (
+            <span className="text-gray-600">Slot Pending</span>
+          ) : application.Registration[0].Slot ? (
+            <Link
+              href={`/applications/${application.id}`}
+              className="font-medium text-pink-600 hover:text-pink-500"
+            >
+              View Slot Details
+            </Link>
+          ) : (
+            <SlotButton
+              registrationno={application.Registration[0].registrationNo}
+            />
+          )}
+        </div>
+        <div className="px-6 py-5 text-center text-sm font-medium">
+          {application.Registration.length === 0 ? (
+            <span className="text-gray-600">Admin Card Pending</span>
+          ) : application.Registration[0].AdmitCard ? (
+            <Link
+              href={`/applications/${application.id}`}
+              className="font-medium text-pink-600 hover:text-pink-500"
+            >
+              Download Admit Card
+            </Link>
+          ) : (
+            <span className="text-gray-600">Admin Card Pending</span>
+          )}
+        </div>
+        <div className="px-6 py-5 text-center text-sm font-medium">
+          <span className="text-gray-600">Rank Not Published</span>
+        </div>
       </div>
     </div>
   );
