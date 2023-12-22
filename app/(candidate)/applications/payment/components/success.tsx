@@ -17,8 +17,8 @@ const Success = () => {
   let uphone = candidate.phone;
   let email = candidate.email;
   const source = candidate.infosource.name;
-  const section = "Personal Details";
-  const paystatus = "Unpaid";
+  const section = "App Fee Payment";
+  const paystatus = "Paid";
  invokeAPI({email: email,name: uname, phone: uphone, section: section, paystatus: paystatus,source :source,candid: candid});
 
 
