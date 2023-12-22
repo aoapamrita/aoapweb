@@ -1,5 +1,3 @@
-import React from "react";
-import BreadCrumbs from "../../../components/breadcrumbs";
 import { checkExamValid } from "@/app/data/entrance";
 import Link from "next/link";
 
@@ -15,7 +13,6 @@ const Page = async ({ params }) => {
 
   return (
     <div>
-      <BreadCrumbs />
       <div className="h-6"></div>
       {!valid ? (
         <p>
