@@ -25,6 +25,7 @@ import getCandidateParentById from "@/app/data/getCandidateParent";
 import { format } from 'date-fns';
 import dayjs from "dayjs";
 import CldPicture from "../../profile/components/cldpicture";
+import { useEffect } from 'react';
 import "../../../style/formstyle.css";
 
 
@@ -139,19 +140,27 @@ export default function AeeeRegistration({ application }) {
   });
 
   {/* Application form PDF download function */}
-  const downloadPDF = ({}) => {
-   const element = document.getElementById('hidden-application-form');
-   element.style.display = 'block';
-    html2pdf(element, {
-      margin: 10,
-      filename: 'Application-form.pdf',
-      image: { type: 'jpeg', quality: 0.98 },
-      html2canvas: { scale: 1,useCORS: true },
-      jsPDF: { unit: 'mm', format: 'a3', orientation: 'portrait' }
-    }).then(() => {
-      element.style.display = 'none';
+  const downloadPDF = () => {
+    const element = document.getElementById('hidden-application-form');
+    element.style.display = 'block';
+    import('html2pdf.js').then(({ default: html2pdf }) => {
+      html2pdf(element, {
+        margin: 10,
+        filename: 'Application-form.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 1, useCORS: true },
+        jsPDF: { unit: 'mm', format: 'a3', orientation: 'portrait' },
+      }).then(() => {
+        element.style.display = 'none';
+      });
     });
   };
+
+
+   const cloudPhotoUrl = "https://res.cloudinary.com/dkzpmdjf0/image/upload/c_fill,h_150,w_120/";
+   const cloudSignUrl = "https://res.cloudinary.com/dkzpmdjf0/image/upload/c_fill,h_150,w_300/";
+   
+
 
   
 
@@ -177,8 +186,8 @@ export default function AeeeRegistration({ application }) {
                       <ArrowDownOnSquareIcon className="h-6 w-6"  />
                       Download Application
                     </button>
-            </span>:""
-          }
+            </span>: ""
+          } 
           </div>
         </div>
         <div className="mt-6 border-t border-gray-200">
@@ -256,7 +265,7 @@ export default function AeeeRegistration({ application }) {
       <div id="application-form">             
        <div className="form-logo">
             <img 
-                src="https://upload.wikimedia.org/wikipedia/en/f/f8/Amrita-vishwa-vidyapeetham-color-logo.png"
+                src="/images/pdf-logo.png"
                 width="300"
                 height="150"
                 alt="Amrita Vishwa Vidyapeetham"
@@ -267,11 +276,11 @@ export default function AeeeRegistration({ application }) {
             <p><BarcodeComponent number={registration?.registrationNo}  /></p>
         </div>
         <div className="form-image">
-            <CldPicture
+            <img
                 id="student-image"
                 width="150"
-                height="250"
-                src={candidate?.photoid}
+                height="120"
+                src={`${cloudPhotoUrl}${candidate?.photoid}.jpg`}
                 sizes="100vw"
                 alt="Image of Student"
             />
@@ -328,8 +337,8 @@ export default function AeeeRegistration({ application }) {
                 <p className='form-end'>Date:</p>
                 <div className="form-signature pr-8">
                           <div className="signature-image">
-                              <CldPicture
-                                  src={candidate?.signid}
+                              <img
+                                  src={`${cloudSignUrl}${candidate?.signid}.jpg`}
                                   width="150"
                                   height="150"
                                   alt="Signature of Student"
