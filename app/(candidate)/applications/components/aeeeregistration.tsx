@@ -3,21 +3,18 @@ import {
   addCityToApplication,
   getApplicationJeeStatus,
   getCityByApplication,
-  getProgrammesByApplication,
   removeCityFromApplication,
   updateApplicationJeeStatus,
 } from "@/app/data/applicationclient";
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
-import { useRouter } from "next/navigation";
+import DataLoader from "@/app/components/DataLoader";
+import dayjs from "dayjs";
+import ApplicationCities from "./applicationcity";
 import CompleteRegistration from "./completeregistration";
 import EntranceTotalPayments from "./entrancetotalpayments";
-import DataLoader from "@/app/components/DataLoader";
-import ApplicationCities from "./applicationcity";
 import ToggleSwitch from "./toggleswitch";
-import { useState } from "react";
-import dayjs from "dayjs";
 
 export default function AeeeRegistration({ application }) {
   const queryClient = useQueryClient();
@@ -142,7 +139,7 @@ export default function AeeeRegistration({ application }) {
                 {application.exam.entrance.code.toUpperCase()}
               </dd>
             </div>
-            {registration.Slot ? (
+            {registration && registration.Slot ? (
               <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                 <dt className="text-sm font-medium leading-6 text-gray-900">
                   Slot details
@@ -159,7 +156,7 @@ export default function AeeeRegistration({ application }) {
                 </dd>
               </div>
             ) : null}
-            {registration.AdmitCard ? (
+            {registration && registration.AdmitCard ? (
               <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                 <dt className="text-sm font-medium leading-6 text-gray-900">
                   Admit Card details
