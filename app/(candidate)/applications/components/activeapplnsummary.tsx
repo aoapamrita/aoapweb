@@ -12,7 +12,7 @@ const ActiveApplicationSummary = ({ entrance }) => {
   });
 
   console.log("application", application);
-  console.log("entrance", entrance.Exam[0].id);
+  console.log("entrance", entrance);
 
   return (
     <>
@@ -22,7 +22,7 @@ const ActiveApplicationSummary = ({ entrance }) => {
         </div>
       ) : application ? (
         <ApplicationStats application={application} />
-      ) : (
+      ) : entrance.Exam[0].status === "APPLY" ? (
         <div className="bg-white shadow rounded-md sm:rounded-lg pt-1">
           <div className="px-4 py-5 sm:p-6">
             <h2 className="text-base font-semibold leading-6 text-gray-900">
@@ -44,7 +44,7 @@ const ActiveApplicationSummary = ({ entrance }) => {
             </div>
           </div>
         </div>
-      )}
+      ) : null}
     </>
   );
 };

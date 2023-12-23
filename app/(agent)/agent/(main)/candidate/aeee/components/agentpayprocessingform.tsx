@@ -6,9 +6,13 @@ const AgentPayProcessingForm = ({ txndetails }) => {
   console.log(txndetails);
 
   // production details
-  const key = "ypfBaj";
-  const salt = "aG3tGzBZ";
-  const gatewayUrl = "https://secure.payu.in/_payment";
+  //   const key = "ypfBaj";
+  //   const salt = "aG3tGzBZ";
+  //   const gatewayUrl = "https://secure.payu.in/_payment";
+
+  const key = process.env.NEXT_PUBLIC_PAYU_KEY;
+  const salt = process.env.NEXT_PUBLIC_PAYU_SALT;
+  const gatewayUrl = process.env.NEXT_PUBLIC_PAYU_GATEWAYURL;
 
   // development details
   //   const key = "aJ1WVm";
