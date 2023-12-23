@@ -5,23 +5,19 @@ import { useQuery } from "@tanstack/react-query";
 import getCandidate from "@/app/data/getCandidate";
 import invokeAPI from "@/app/data/updateleadapi";
 
-const { data: candidate, isLoading: candidateLoading } = useQuery({
-  queryKey: ["candidate"],
-  queryFn: () => getCandidate(),
-});
-
 const Success = () => {
-
-  const candid = candidate.id;
-  const uname = candidate.fullname;
-  let uphone = candidate.phone;
-  let email = candidate.email;
-  const source = candidate.infosource.name;
-  const section = "App Fee Payment";
-  const paystatus = "Paid";
- invokeAPI({email: email,name: uname, phone: uphone, section: section, paystatus: paystatus,source :source,candid: candid});
-
-
+  //     const { data: candidate, isLoading: candidateLoading } = useQuery({
+  //         queryKey: ["candidate"],
+  //         queryFn: () => getCandidate(),
+  //       });
+  //   const candid = candidate.id;
+  //   const uname = candidate.fullname;
+  //   let uphone = candidate.phone;
+  //   let email = candidate.email;
+  //   const source = candidate.infosource.name;
+  //   const section = "App Fee Payment";
+  //   const paystatus = "Paid";
+  //  invokeAPI({email: email,name: uname, phone: uphone, section: section, paystatus: paystatus,source :source,candid: candid});
 
   return (
     <div className="bg-white shadow-sm border border-green-300 rounded-lg mt-10 px-5 py-5 max-w-lg mx-auto">
