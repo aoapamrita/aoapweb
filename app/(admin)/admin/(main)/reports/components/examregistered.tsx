@@ -38,6 +38,12 @@ const ExamRegistered = () => {
                     scope="col"
                     className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0"
                   >
+                    Applied
+                  </th>
+                  <th
+                    scope="col"
+                    className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0"
+                  >
                     Registered
                   </th>
                 </tr>
@@ -51,7 +57,10 @@ const ExamRegistered = () => {
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                       {report.exam}
                     </td>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                    <td className="whitespace-nowrap px-3 py-4 text-left text-sm text-gray-500">
+                      {report.applied}
+                    </td>
+                    <td className="whitespace-nowrap px-3 py-4 text-left text-sm text-gray-500">
                       {report.registered}
                     </td>
                   </tr>
