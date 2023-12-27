@@ -20,8 +20,8 @@ const AgentSchema = yup.object().shape({
     .required("Amount is required")
     .test(
       "is-positive",
-      "Amount should be positive",
-      (value) => parseFloat(value) > 0
+      "Enter Valid Amount",
+      (value) => parseFloat(value) >= 0
     ),
 });
 
