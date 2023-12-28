@@ -28,6 +28,7 @@ import CldPicture from "../../profile/components/cldpicture";
 import { useEffect } from 'react';
 import "../../../style/formstyle.css";
 
+import ShowApplicationCities from "./showapplncities";
 
 export default function AeeeRegistration({ application }) {
   const queryClient = useQueryClient();
@@ -200,61 +201,147 @@ export default function AeeeRegistration({ application }) {
                 {application.exam.entrance.code.toUpperCase()}
               </dd>
             </div>
-            <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-              <dt className="text-sm font-medium leading-6 text-gray-900">
-                City Preferences
-                <p className="text-xs italic">
-                  Choose 3 cities to attend the{" "}
-                  <strong>Computer Based Test</strong>
-                </p>
-                {applicationCities && applicationCities.length != 3 && (
-                  <p className="mt-2 text-sm text-red-600" id="email-error">
-                    It is mandatory to select 3 cities
+            {registration && registration.Slot ? (
+              <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                <dt className="text-sm font-medium leading-6 text-gray-900">
+                  Slot details
+                </dt>
+                <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+                  <p>Registration No : {registration.Slot.registrationNo}</p>
+                  <p>Exam Mode : {registration.Slot.examMode}</p>
+                  <p>
+                    Exam Date:{" "}
+                    {dayjs(registration.Slot.examDate).format("DD/MM/YYYY")}
                   </p>
-                )}
-              </dt>
-              <dd className="mt-2 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                {applicationCitiesLoading ? (
-                  <DataLoader size="lg" />
-                ) : (
-                  <ApplicationCities
-                    applicationCities={applicationCities}
-                    removeCity={removeCity}
-                    application={application}
-                    addCity={addCity}
-                    cityaddloading={cityaddloading}
-                    cityremoveloading={cityremoveloading}
-                  />
-                )}
-              </dd>
-            </div>
-            <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-              <dt className="text-sm font-medium leading-6 text-gray-900">
-                Do you want to consider based on the JEE CRL Rank?
-                <p className="text-xs italic">
-                  <span className="text-red-700">*</span> JEE details and
-                  Percentile shall be entered after the publication of JEE Mains
-                  2024 results. The fields will be enabled only after the JEE
-                  Mains 2024 results. Candidates who have not submitted the
-                  requisite details will not be considered for admission based
-                  on JEE CRL Percentile
-                </p>
-              </dt>
-              <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                {jeeStatusLoading ? (
-                  <DataLoader size="lg" />
-                ) : (
-                  <ToggleSwitch
-                    initialValue={jeestatus.jee}
-                    changeStatus={changeJeeStatus}
-                  />
-                )}
-              </dd>
-            </div>
+                  <p>Exam Time: {registration.Slot.examTime}</p>
+                  <p>Selected City: {registration.Slot.selectedCityCode}</p>
+                </dd>
+              </div>
+            ) : null}
+            {registration && registration.AdmitCard ? (
+              <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                <dt className="text-sm font-medium leading-6 text-gray-900">
+                  Admit Card details
+                </dt>
+                <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+                  <p>
+                    Registration No : {registration.AdmitCard.registrationNo}
+                  </p>
+                  <p>Exam Mode : {registration.AdmitCard.examMode}</p>
+                  <p>
+                    Exam Date:{" "}
+                    {dayjs(registration.AdmitCard.examDate).format(
+                      "DD/MM/YYYY"
+                    )}
+                  </p>
+                  <p>Exam Time: {registration.AdmitCard.examTime}</p>
+                  <p>Location Name: {registration.AdmitCard.locationName}</p>
+                  <p>
+                    Location Address: {registration.AdmitCard.locationAddress}
+                  </p>
+                  <p>Pincode: {registration.AdmitCard.pincode}</p>
+                  <p>PhoneNumber: {registration.AdmitCard.phoneNumber}</p>
+                </dd>
+              </div>
+            ) : null}
+            {registration ? (
+              <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                <dt className="text-sm font-medium leading-6 text-gray-900">
+                  City Preferences
+                </dt>
+                <dd className="mt-2 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                  {applicationCitiesLoading ? (
+                    <DataLoader size="lg" />
+                  ) : (
+                    <ShowApplicationCities
+                      applicationCities={applicationCities}
+                    />
+                  )}
+                </dd>
+              </div>
+            ) : (
+              <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                <dt className="text-sm font-medium leading-6 text-gray-900">
+                  City Preferences
+                  <p className="text-xs italic">
+                    Choose 3 cities to attend the{" "}
+                    <strong>Computer Based Test</strong>
+                  </p>
+                  {applicationCities && applicationCities.length != 3 && (
+                    <p className="mt-2 text-sm text-red-600" id="email-error">
+                      It is mandatory to select 3 cities
+                    </p>
+                  )}
+                </dt>
+                <dd className="mt-2 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                  {applicationCitiesLoading ? (
+                    <DataLoader size="lg" />
+                  ) : (
+                    <ApplicationCities
+                      applicationCities={applicationCities}
+                      removeCity={removeCity}
+                      application={application}
+                      addCity={addCity}
+                      cityaddloading={cityaddloading}
+                      cityremoveloading={cityremoveloading}
+                    />
+                  )}
+                </dd>
+              </div>
+            )}
+            {registration ? (
+              <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                <dt className="text-sm font-medium leading-6 text-gray-900">
+                  Do you want to consider based on the JEE CRL Rank?
+                </dt>
+                <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+                  {jeeStatusLoading ? (
+                    <DataLoader size="lg" />
+                  ) : jeestatus.jee ? (
+                    "Yes"
+                  ) : (
+                    "No"
+                  )}
+                </dd>
+              </div>
+            ) : (
+              <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                <dt className="text-sm font-medium leading-6 text-gray-900">
+                  Do you want to consider based on the JEE CRL Rank?
+                  <p className="text-xs italic">
+                    <span className="text-red-700">*</span> JEE details and
+                    Percentile shall be entered after the publication of JEE
+                    Mains 2024 results. The fields will be enabled only after
+                    the JEE Mains 2024 results. Candidates who have not
+                    submitted the requisite details will not be considered for
+                    admission based on JEE CRL Percentile
+                  </p>
+                </dt>
+                <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+                  {jeeStatusLoading ? (
+                    <DataLoader size="lg" />
+                  ) : (
+                    <ToggleSwitch
+                      initialValue={jeestatus.jee}
+                      changeStatus={changeJeeStatus}
+                    />
+                  )}
+                </dd>
+              </div>
+            )}
           </dl>
         </div>
         {registration ? (
           <EntranceTotalPayments application={application} />
+        ) : applicationCitiesLoading ? (
+          <DataLoader size="lg" />
+        ) : applicationCities.length < 3 ? (
+          <div className="px-4 sm:px-0">
+            <h3 className="text-base font-semibold italic leading-7 text-gray-900">
+              <span className="text-red-600">*</span>Please select your city
+              preferences to complete the registration
+            </h3>
+          </div>
         ) : (
           <CompleteRegistration application={application} />
         )}
