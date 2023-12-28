@@ -4,10 +4,9 @@ import crypto from "crypto";
 const SlotProcessingForm = ({ txndetails }) => {
   const formRef = useRef(null);
 
-  const token = "GBHG5455GH545646HJKL";
+  const token = process.env.NEXT_PUBLIC_CBT_SSO_TOKEN;
   const hash = generateHash(txndetails, token);
-  const gatewayUrl =
-    "https://uat-pearsonvue.excelindia.com/Amrita/SingleSignOn/Integration";
+  const gatewayUrl = process.env.NEXT_PUBLIC_CBT_SSO_URL;
 
   function generateHash(input, token) {
     let hashString =
