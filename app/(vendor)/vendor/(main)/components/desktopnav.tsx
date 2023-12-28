@@ -10,64 +10,10 @@ function classNames(...classes) {
 }
 
 const navigation = [
-  { name: "Dashboard", href: "/admin/dashboard" },
+  { name: "Dashboard", href: "/vendor/dashboard" },
   {
     name: "Reports",
-    children: [
-      { name: "UTM", href: "/admin/reports/utm" },
-      { name: "UTM Source", href: "/admin/reports/utmreport" },
-      { name: "Application", href: "/admin/reports/application" },
-      { name: "State", href: "/admin/reports/state" },
-      { name: "District", href: "/admin/reports/district" },
-      { name: "Exam", href: "/admin/reports/exam" },
-      { name: "Exam City", href: "/admin/reports/examcity" },
-      { name: "Referer", href: "/admin/reports/referer" },
-    ],
-  },
-  {
-    name: "Candidates",
-    children: [
-      { name: "Export", href: "/admin/reports/candidates" },
-      { name: "Search", href: "/admin/candidates" },
-    ],
-  },
-  {
-    name: "Master",
-    children: [
-      { name: "Entrance", href: "/admin/master/entrance" },
-      { name: "Entrance Cities", href: "/admin/master/entrancecities" },
-      { name: "Programmes", href: "/admin/master/programmes" },
-      { name: "Gender", href: "/admin/master/gender" },
-      { name: "Social Status", href: "/admin/master/socialstatus" },
-      { name: "Info Source", href: "/admin/master/infosource" },
-      { name: "States", href: "/admin/master/states" },
-      { name: "District", href: "/admin/master/district" },
-      { name: "JEE", href: "/admin/master/jee" },
-      { name: "City", href: "/admin/master/city" },
-      { name: "Exam", href: "/admin/master/exam" },
-      { name: "Courses", href: "/admin/master/courses" },
-      { name: "Campus", href: "/admin/master/campus" },
-      { name: "Transactions", href: "/admin/master/transactions" },
-    ],
-  },
-  {
-    name: "Agents",
-    children: [
-      { name: "Stats", href: "/admin/agents" },
-      { name: "List", href: "/admin/agents/list" },
-    ],
-  },
-  {
-    name: "Counsellors",
-    children: [{ name: "Counsellor", href: "/admin/counsellors" }],
-  },
-  {
-    name: "Vendors",
-    children: [
-      { name: "List", href: "/admin/vendors/list" },
-      { name: "Exam Centres", href: "/admin/vendors/centres" },
-      { name: "Sync Users", href: "/admin/vendors/usersync" },
-    ],
+    children: [{ name: "Exam City", href: "/vendor/reports/examcity" }],
   },
 ];
 
