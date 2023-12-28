@@ -29,3 +29,15 @@ export const removeVendor = async (id) => {
     return data;
   }
 };
+
+export const forgotVendorPassword = async (email) => {
+  try {
+    const { data } = await apiclient.post(`/api/vendor/forgotpassword`, {
+      email,
+    });
+    return data;
+  } catch (error) {
+    const { data } = error.response;
+    return data;
+  }
+};

@@ -94,7 +94,7 @@ export default function SignIn() {
                 </label>
                 <div className="text-sm">
                   <Link
-                    href="/agent/forgotpassword"
+                    href="/vendor/forgotpassword"
                     className="font-semibold text-pink-600 hover:text-pink-500"
                   >
                     Forgot password?

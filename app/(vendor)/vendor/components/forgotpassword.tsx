@@ -2,15 +2,12 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
-import signIn from "@/app/data/agent/authenticationclient";
-import { useState } from "react";
 import DataLoader from "@/app/components/DataLoader";
-import { redirect, useRouter } from "next/navigation";
-import Link from "next/link";
-import { forgotAgentPassword } from "@/app/data/agent/agent";
+import { useRouter } from "next/navigation";
+import { forgotVendorPassword } from "@/app/data/vendor/vendor";
 
 const ForgotSchema = yup.object().shape({
-  username: yup.string().required("Username is required"),
+  email: yup.string().required("Username is required"),
 });
 
 export default function ForgotPassword() {
@@ -33,9 +30,9 @@ export default function ForgotPassword() {
 
   const onSubmit = async (data) => {
     console.log("processing data", data);
-    const result = await forgotAgentPassword(data.username);
+    const result = await forgotVendorPassword(data.email);
     console.log("processed data", result);
-    router.push("/agent/forgotpassword/send");
+    router.push("/vendor/forgotpassword/send");
   };
 
   return (
@@ -43,7 +40,7 @@ export default function ForgotPassword() {
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm flex flex-col items-center">
           <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-            AOAP Agent Forgot Password
+            AOAP Vendor Forgot Password
           </h2>
         </div>
 
@@ -58,15 +55,15 @@ export default function ForgotPassword() {
               </label>
               <div className="mt-2">
                 <input
-                  {...register("username")}
+                  {...register("email")}
                   type="text"
                   required
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-pink-600 sm:text-sm sm:leading-6"
                 />
               </div>
-              {errors["username"] && (
+              {errors["email"] && (
                 <p className="mt-2 text-sm text-red-600" id="email-error">
-                  {errors["username"].message}
+                  {errors["email"].message}
                 </p>
               )}
             </div>
