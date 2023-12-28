@@ -101,7 +101,7 @@ const UpdateExam = ({ exam, completeUpdate }) => {
               >
                 {Object.keys(ExamStatus).map((key) => (
                   <option key={key} value={key}>
-                    {v.capitalize(key.toLowerCase())}
+                    {ExamStatus[key]}
                   </option>
                 ))}
               </select>
