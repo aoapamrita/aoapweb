@@ -2,10 +2,12 @@ import getUser from "@/app/data/getuser";
 import OnboardingWrapper from "./components/onboarding-wrapper";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
+import getCandidateServer from "@/app/data/getCandidateServer";
 
 const Page = async () => {
   const user = await getUser();
-  console.log(user);
+  const candidate = await getCandidateServer();
+  console.log(candidate);
 
   if (!user) {
     redirect("/");
@@ -17,7 +19,13 @@ const Page = async () => {
 
   const loadingStep = user.onboarding;
 
-  return <OnboardingWrapper loadingStep={loadingStep} user={user} />;
+  return (
+    <OnboardingWrapper
+      loadingStep={loadingStep}
+      user={user}
+      candidate={candidate}
+    />
+  );
 };
 
 export default Page;
