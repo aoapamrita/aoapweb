@@ -39,11 +39,6 @@ const AcademicInfo = ({ candidate }) => {
     queryFn: () => getStates(),
   });
 
-  const { data: candidate, isLoading: candidateLoading } = useQuery({
-    queryKey: ["candidate"],
-    queryFn: () => getCandidate(),
-  });
-
   const {
     register,
     handleSubmit,
@@ -79,8 +74,15 @@ const AcademicInfo = ({ candidate }) => {
     const source = candidate.infosource.name;
     const section = "Personal Details";
     const paystatus = "Unpaid";
- await invokeAPI({email: email,name: uname, phone: uphone, section: section, paystatus: paystatus,source :source,candid: candid});
-
+    await invokeAPI({
+      email: email,
+      name: uname,
+      phone: uphone,
+      section: section,
+      paystatus: paystatus,
+      source: source,
+      candid: candid,
+    });
 
     const mail = await sendWelcome();
     console.log(mail);
