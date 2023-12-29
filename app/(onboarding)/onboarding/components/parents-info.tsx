@@ -27,7 +27,7 @@ const ParentInfoSchmema = yup.object().shape({
   email: yup.string().required("Email is required").email("Enter Valid Email"),
 });
 
-const ParentsInfo = ({ showNext }) => {
+const ParentsInfo = ({ showNext, candidate }) => {
   const {
     register,
     handleSubmit,
@@ -98,6 +98,12 @@ const ParentsInfo = ({ showNext }) => {
               <div className="relative mt-2">
                 <input
                   type="text"
+                  defaultValue={
+                    candidate.ParentInfo?.fullname
+                      ? candidate.ParentInfo?.fullname
+                      : ""
+                  }
+                  readOnly={candidate.ParentInfo?.fullname}
                   id="fullname"
                   {...register("fullname")}
                   autoComplete="fullname"

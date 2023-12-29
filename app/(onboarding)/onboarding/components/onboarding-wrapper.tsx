@@ -5,7 +5,7 @@ import ParentsInfo from "./parents-info";
 import AcademicInfo from "./academic-info";
 import StepsNav from "./stepsnav";
 
-const OnboardingWrapper = ({ loadingStep, user }) => {
+const OnboardingWrapper = ({ loadingStep, user, candidate }) => {
   const [currentStep, setCurrentStep] = useState(loadingStep);
 
   function showNext() {
@@ -18,17 +18,21 @@ const OnboardingWrapper = ({ loadingStep, user }) => {
       <div className="px-4 sm:px-0">
         {currentStep === 1 && (
           <div>
-            <PersonalInfo showNext={showNext} user={user} />
+            <PersonalInfo
+              showNext={showNext}
+              user={user}
+              candidate={candidate}
+            />
           </div>
         )}
         {currentStep === 2 && (
           <div>
-            <ParentsInfo showNext={showNext} />
+            <ParentsInfo showNext={showNext} candidate={candidate} />
           </div>
         )}
         {currentStep === 3 && (
           <div>
-            <AcademicInfo />
+            <AcademicInfo candidate={candidate} />
           </div>
         )}
       </div>

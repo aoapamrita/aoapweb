@@ -32,6 +32,7 @@ import sendPhoneOtp from "@/app/data/phoneotp";
 import verifyPhoneOtp from "@/app/data/verifyPhoneOtp";
 import isValidPhone from "@/app/utilities/checkphone";
 import { clsx } from "clsx";
+import dayjs from "dayjs";
 
 const PersonalInfoSchema = yup.object().shape({
   fullname: yup.string().required("Name Required"),
@@ -65,7 +66,7 @@ interface CloudinaryResult {
   public_id: string;
 }
 
-const PersonalInfo = ({ showNext, user }) => {
+const PersonalInfo = ({ showNext, user, candidate }) => {
   const [lstateId, setStateId] = useState(null);
   const [ldistrictId, setDistrictId] = useState(null);
   const [lcityId, setCityId] = useState(null);
@@ -92,8 +93,12 @@ const PersonalInfo = ({ showNext, user }) => {
   const [phoneOtpError, setPhoneOtpError] = useState("");
   const [phoneOtp, setPhoneOtp] = useState("");
 
-  const [lphotoid, setPhotoId] = useState("");
-  const [lsignid, setSignId] = useState("");
+  const [lphotoid, setPhotoId] = useState(
+    candidate.photoid ? candidate.photoid : ""
+  );
+  const [lsignid, setSignId] = useState(
+    candidate.signid ? candidate.signid : ""
+  );
 
   const { data: gender, isLoading: genderLoading } = useQuery({
     queryKey: ["gender"],
@@ -297,6 +302,8 @@ const PersonalInfo = ({ showNext, user }) => {
               </label>
               <div className="relative mt-2">
                 <input
+                  defaultValue={candidate.fullname}
+                  readOnly={candidate.fullname}
                   type="text"
                   id="fullname"
                   {...register("fullname")}
@@ -326,18 +333,35 @@ const PersonalInfo = ({ showNext, user }) => {
                 DOB
               </label>
               <div className="relative mt-2">
-                <DatepickerComponent
-                  control={control}
-                  name="dob"
-                  defaultValue=""
-                  transform={{
-                    input: (dateValue) => ({
-                      startDate: dateValue,
-                      endDate: dateValue,
-                    }),
-                    output: (dateRange) => dateRange.startDate,
-                  }}
-                />
+                {candidate.dob ? (
+                  <>
+                    <input
+                      defaultValue={dayjs(candidate.dob).format("DD/MM/YYYY")}
+                      readOnly={true}
+                      type="text"
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-pink-600 sm:text-sm sm:leading-6"
+                    />
+                    <input
+                      type="hidden"
+                      defaultValue={candidate.dob}
+                      {...register("dob")}
+                    />
+                  </>
+                ) : (
+                  <DatepickerComponent
+                    control={control}
+                    name="dob"
+                    defaultValue=""
+                    transform={{
+                      input: (dateValue) => ({
+                        startDate: dateValue,
+                        endDate: dateValue,
+                      }),
+                      output: (dateRange) => dateRange.startDate,
+                    }}
+                  />
+                )}
+
                 {errors["dob"] && (
                   <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
                     <ExclamationCircleIcon
@@ -369,18 +393,30 @@ const PersonalInfo = ({ showNext, user }) => {
                 ) : null}
               </label>
               <div className="relative mt-2">
-                <select
-                  {...register("genderId", { valueAsNumber: true })}
-                  className="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-pink-600 sm:text-sm sm:leading-6"
-                >
-                  <option value="0">--Select--</option>
-                  {gender &&
-                    gender.map((item) => (
-                      <option key={item.id} value={item.id}>
-                        {item.name}
-                      </option>
-                    ))}
-                </select>
+                {genderLoading ? (
+                  <select
+                    key={1}
+                    className="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-pink-600 sm:text-sm sm:leading-6"
+                  >
+                    <option>--Select--</option>
+                  </select>
+                ) : (
+                  <select
+                    key={2}
+                    defaultValue={candidate.genderId}
+                    disabled={candidate.genderId}
+                    {...register("genderId", { valueAsNumber: true })}
+                    className="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-pink-600 sm:text-sm sm:leading-6"
+                  >
+                    <option value="0">--Select--</option>
+                    {gender &&
+                      gender.map((item) => (
+                        <option key={item.id} value={item.id}>
+                          {item.name}
+                        </option>
+                      ))}
+                  </select>
+                )}
               </div>
               {errors["genderId"] && (
                 <p className="mt-2 text-sm text-red-600" id="email-error">
@@ -404,20 +440,31 @@ const PersonalInfo = ({ showNext, user }) => {
                 ) : null}
               </label>
               <div className="mt-2">
-                <select
-                  id="socialstatusId"
-                  {...register("socialstatusId", { valueAsNumber: true })}
-                  className="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-pink-600 sm:text-sm sm:leading-6"
-                  defaultValue="0"
-                >
-                  <option value="0">--Select--</option>
-                  {socialStatus &&
-                    socialStatus.map((item) => (
-                      <option key={item.id} value={item.id}>
-                        {item.name}
-                      </option>
-                    ))}
-                </select>
+                {socialStatusLoading ? (
+                  <select
+                    key={1}
+                    className="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-pink-600 sm:text-sm sm:leading-6"
+                  >
+                    <option>--Select--</option>
+                  </select>
+                ) : (
+                  <select
+                    key={4}
+                    id="socialstatusId"
+                    disabled={candidate.socialstatusId}
+                    {...register("socialstatusId", { valueAsNumber: true })}
+                    className="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-pink-600 sm:text-sm sm:leading-6"
+                    defaultValue={candidate.socialstatusId}
+                  >
+                    <option value="0">--Select--</option>
+                    {socialStatus &&
+                      socialStatus.map((item) => (
+                        <option key={item.id} value={item.id}>
+                          {item.name}
+                        </option>
+                      ))}
+                  </select>
+                )}
               </div>
               {errors["socialstatusId"] && (
                 <p className="mt-2 text-sm text-red-600" id="email-error">
@@ -442,6 +489,7 @@ const PersonalInfo = ({ showNext, user }) => {
                     render={({ field }) => (
                       <input
                         type="text"
+                        readOnly={user.email}
                         {...field}
                         value={userEmail}
                         onChange={(e) => {
@@ -918,6 +966,7 @@ const PersonalInfo = ({ showNext, user }) => {
               </label>
               <div className="mt-2">
                 <input
+                  defaultValue={candidate.address1}
                   type="text"
                   {...register("address1")}
                   id="street-address"
@@ -936,6 +985,7 @@ const PersonalInfo = ({ showNext, user }) => {
               </label>
               <div className="mt-2">
                 <input
+                  defaultValue={candidate.address2}
                   type="text"
                   {...register("address2")}
                   id="street-address"
@@ -968,33 +1018,35 @@ const PersonalInfo = ({ showNext, user }) => {
                     aria-hidden="true"
                   />
                 )}
-                <CldUploadWidget
-                  uploadPreset="cedievmy"
-                  options={{
-                    sources: ["local"],
-                    multiple: false,
-                    maxFiles: 1,
-                    cropping: true,
-                    clientAllowedFormats: ["image"],
-                    maxFileSize: 2000000,
-                  }}
-                  onUpload={(result, widget) => {
-                    if (result.event !== "success") return;
-                    const info = result.info as CloudinaryResult;
-                    setPhotoId(info.public_id);
-                    clearErrors("photoid");
-                  }}
-                >
-                  {({ open }) => (
-                    <button
-                      type="button"
-                      className="rounded-md border border-pink-600 px-3 py-2 text-sm font-semibold text-pink-600 shadow-sm hover:bg-pink-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink-600"
-                      onClick={() => open()}
-                    >
-                      Upload
-                    </button>
-                  )}
-                </CldUploadWidget>
+                {candidate.isOMR && candidate.photoid ? null : (
+                  <CldUploadWidget
+                    uploadPreset="cedievmy"
+                    options={{
+                      sources: ["local"],
+                      multiple: false,
+                      maxFiles: 1,
+                      cropping: true,
+                      clientAllowedFormats: ["image"],
+                      maxFileSize: 2000000,
+                    }}
+                    onUpload={(result, widget) => {
+                      if (result.event !== "success") return;
+                      const info = result.info as CloudinaryResult;
+                      setPhotoId(info.public_id);
+                      clearErrors("photoid");
+                    }}
+                  >
+                    {({ open }) => (
+                      <button
+                        type="button"
+                        className="rounded-md border border-pink-600 px-3 py-2 text-sm font-semibold text-pink-600 shadow-sm hover:bg-pink-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink-600"
+                        onClick={() => open()}
+                      >
+                        Upload
+                      </button>
+                    )}
+                  </CldUploadWidget>
+                )}
               </div>
               {errors["photoid"] && (
                 <p className="mt-2 text-sm text-red-600" id="email-error">
@@ -1025,33 +1077,35 @@ const PersonalInfo = ({ showNext, user }) => {
                     aria-hidden="true"
                   />
                 )}
-                <CldUploadWidget
-                  uploadPreset="cedievmy"
-                  options={{
-                    sources: ["local"],
-                    multiple: false,
-                    maxFiles: 1,
-                    cropping: true,
-                    clientAllowedFormats: ["image"],
-                    maxFileSize: 2000000,
-                  }}
-                  onUpload={(result, widget) => {
-                    if (result.event !== "success") return;
-                    const info = result.info as CloudinaryResult;
-                    setSignId(info.public_id);
-                    clearErrors("signid");
-                  }}
-                >
-                  {({ open }) => (
-                    <button
-                      type="button"
-                      className="rounded-md border border-pink-600 px-3 py-2 text-sm font-semibold text-pink-600 shadow-sm hover:bg-pink-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink-600"
-                      onClick={() => open()}
-                    >
-                      Upload
-                    </button>
-                  )}
-                </CldUploadWidget>
+                {candidate.isOMR && candidate.signid ? null : (
+                  <CldUploadWidget
+                    uploadPreset="cedievmy"
+                    options={{
+                      sources: ["local"],
+                      multiple: false,
+                      maxFiles: 1,
+                      cropping: true,
+                      clientAllowedFormats: ["image"],
+                      maxFileSize: 2000000,
+                    }}
+                    onUpload={(result, widget) => {
+                      if (result.event !== "success") return;
+                      const info = result.info as CloudinaryResult;
+                      setSignId(info.public_id);
+                      clearErrors("signid");
+                    }}
+                  >
+                    {({ open }) => (
+                      <button
+                        type="button"
+                        className="rounded-md border border-pink-600 px-3 py-2 text-sm font-semibold text-pink-600 shadow-sm hover:bg-pink-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink-600"
+                        onClick={() => open()}
+                      >
+                        Upload
+                      </button>
+                    )}
+                  </CldUploadWidget>
+                )}
               </div>
               {errors["signid"] && (
                 <p className="mt-2 text-sm text-red-600" id="email-error">
