@@ -1,6 +1,7 @@
 export enum ExamStatus {
-  CLOSED = "CLOSED",
-  APPLY = "APPLY",
-  SLOT = "SLOT",
-  PAUSE = "PAUSE",
+  PAUSE = "Pause",
+  APPLY = "Apply",
+  ENDAPPLY = "Close Application",
+  ENDREG = "Close Registration",
+  CLOSED = "Closed",
 }

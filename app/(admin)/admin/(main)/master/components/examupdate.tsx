@@ -5,6 +5,7 @@ import React, { useState } from "react";
 import v from "voca";
 import CreateExam from "./createexam";
 import UpdateExam from "./updateexam";
+import { ExamStatus } from "@/app/data/admin/examenums";
 
 const ExamUpdate = ({ entrance }) => {
   const [createMode, setcreateMode] = useState(false);
@@ -54,7 +55,7 @@ const ExamUpdate = ({ entrance }) => {
                   </p>
                   <p>
                     <span className="font-semibold">Status:</span>{" "}
-                    {v.capitalize(exam.status.toLowerCase())}.
+                    {ExamStatus[exam.status]}.
                   </p>
                 </div>
                 <div className="mt-5">
