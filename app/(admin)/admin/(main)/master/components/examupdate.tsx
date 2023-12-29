@@ -6,13 +6,18 @@ import v from "voca";
 import CreateExam from "./createexam";
 import UpdateExam from "./updateexam";
 import { ExamStatus } from "@/app/data/admin/examenums";
+import { PhaseDetails } from "./phasedetails";
 
 const ExamUpdate = ({ entrance }) => {
   const [createMode, setcreateMode] = useState(false);
   const [updateExam, setUpdateExam] = useState(null);
   const queryClient = useQueryClient();
 
-  const { data: exam, isLoading: examLoading } = useQuery({
+  const {
+    data: exam,
+    isLoading: examLoading,
+    refetch,
+  } = useQuery({
     queryKey: ["entrance", entrance.id, "exam"],
     queryFn: () => getExamByEntrance(entrance.id),
   });
@@ -43,31 +48,34 @@ const ExamUpdate = ({ entrance }) => {
           {examLoading ? (
             <DataLoader />
           ) : exam ? (
-            <div className="bg-white border shadow sm:rounded-lg my-5">
-              <div className="px-4 py-5 sm:p-6">
-                <h3 className="text-base font-semibold leading-6 text-gray-900">
-                  Active Exam
-                </h3>
-                <div className="mt-2 max-w-xl text-sm text-gray-500">
-                  <p>
-                    <span className="font-semibold">Description:</span>{" "}
-                    {exam.description}.
-                  </p>
-                  <p>
-                    <span className="font-semibold">Status:</span>{" "}
-                    {ExamStatus[exam.status]}.
-                  </p>
-                </div>
-                <div className="mt-5">
-                  <button
-                    type="button"
-                    onClick={() => setUpdateExam(exam)}
-                    className="rounded-md bg-pink-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-pink-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink-600"
-                  >
-                    Update Exam
-                  </button>
+            <div>
+              <div className="bg-white border shadow sm:rounded-lg my-5">
+                <div className="px-4 py-5 sm:p-6">
+                  <h3 className="text-base font-semibold leading-6 text-gray-900">
+                    Active Exam
+                  </h3>
+                  <div className="mt-2 max-w-xl text-sm text-gray-500">
+                    <p>
+                      <span className="font-semibold">Description:</span>{" "}
+                      {exam.description}.
+                    </p>
+                    <p>
+                      <span className="font-semibold">Status:</span>{" "}
+                      {ExamStatus[exam.status]}.
+                    </p>
+                  </div>
+                  <div className="mt-5">
+                    <button
+                      type="button"
+                      onClick={() => setUpdateExam(exam)}
+                      className="rounded-md bg-pink-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-pink-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink-600"
+                    >
+                      Update Exam
+                    </button>
+                  </div>
                 </div>
               </div>
+              <PhaseDetails exam={exam} refetchData={refetch} />
             </div>
           ) : (
             <div className="my-3">
