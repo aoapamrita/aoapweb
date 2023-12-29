@@ -12,9 +12,6 @@ const DatepickerComponent = ({ control, transform, name, defaultValue }) => {
       render={({ field: { onChange, value } }) => (
         <Datepicker
           primaryColor={"pink"}
-          minDate={new Date("2003-01-01")}
-          maxDate={new Date("2007-12-31")}
-          startFrom={new Date("2003-01-01")}
           asSingle
           useRange={false}
           value={transform.input(value)}
