@@ -22,7 +22,7 @@ export async function getFullJeeDetailsByCandidateId(id) {
 
 export async function getAllAppliedCandidatesInfo() {
   try {
-    const { data } = await apiclient.get(`/api/candidate/applied`, {
+    const { data } = await apiclient.get(`/api/candidateapplied`, {
       responseType: "blob",
     });
 
@@ -33,9 +33,9 @@ export async function getAllAppliedCandidatesInfo() {
   }
 }
 
-export async function getAllCandidatesInfoByStatus() {
+export async function getAllCandidatesInfoByStatus(status) {
   try {
-    const { data } = await apiclient.get(`/api/candidate/filter`, {
+    const { data } = await apiclient.get(`/api/candidatefilter/${status}`, {
       responseType: "blob",
     });
 
