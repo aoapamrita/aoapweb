@@ -1,5 +1,5 @@
 "use client";
-import {getAllCandidatesInfo, getAllCandidatesInfoByStatus, getAllAppliedCandidatesInfo } from "@/app/data/reports/candidate";
+import { getAllCandidatesInfo, getAllCandidatesInfoByStatus, getAllAppliedCandidatesInfo } from "@/app/data/reports/candidate";
 import { ArrowDownOnSquareIcon } from "@heroicons/react/24/outline";
 import React, { useState } from "react";
 import FileDownload from "js-file-download";
@@ -7,11 +7,29 @@ import DataLoader from "@/app/components/DataLoader";
 
 const Candidates = () => {
   const [isFetching, setIsFetching] = useState(false);
+  const [selectedStatus, setSelectedStatus] = useState("");
 
   async function handleExcelDownload() {
     setIsFetching(true);
+
     try {
-      const data = await getAllCandidatesInfoByStatus();
+      let data;
+
+      switch (selectedStatus) {
+        case "signedup": 
+          data = await getAllCandidatesInfoByStatus({ status: false });
+          break;
+        case "profilecompleted": 
+        data = await getAllCandidatesInfoByStatus({ status: true });
+          break;
+        case "applied": 
+          data = await getAllAppliedCandidatesInfo();
+          break;
+        case "all": 
+        default:
+          data = await getAllCandidatesInfo();
+          break;
+      }
 
       const filename = `All-Candidates-${Date.now()}.xlsx`;
 
@@ -22,6 +40,7 @@ const Candidates = () => {
       console.error("Error downloading Excel file:", error);
     }
   }
+
   return (
     <div className="px-4 sm:px-6 lg:px-8">
       <div className="space-y-5">
@@ -32,34 +51,29 @@ const Candidates = () => {
           <p className="text-sm">Download details of all the candidates</p>
         </div>
         <div className="sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0">
-
-        <div className="sm:col-span-2">
+          <div className="sm:col-span-2">
             <label
               htmlFor="entrance-select"
               className="block text-sm font-medium leading-6 text-gray-900"
             >
-             Candidate Status
+              Candidate Status
             </label>
             <div className="relative mt-2">
               <select
                 id="entrance-select"
-                
+                value={selectedStatus}
+                onChange={(e) => setSelectedStatus(e.target.value)}
                 className="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-pink-600 sm:text-sm sm:leading-6"
               >
-                 <option value="">Select Status</option>
-              <option value="0">All</option>
-              <option value="1">Signed Up</option>
-              <option value="2">Profile Completed</option>
-              <option value="3">Applied</option>
-               </select>
+                <option value="">Select Status</option>
+                <option value="all">All</option>
+                <option value="signedup">Signed Up</option>
+                <option value="profilecompleted">Profile Completed</option>
+                <option value="applied">Applied</option>
+              </select>
             </div>
           </div>
-
-
-
           <div className="sm:col-span-2 pt-6 pl-3">
-        
-
             <button
               type="button"
               disabled={isFetching}
@@ -76,11 +90,10 @@ const Candidates = () => {
                 </>
               )}
             </button>
-            </div>
-          </div>                  
+          </div>
         </div>
       </div>
-   
+    </div>
   );
 };
 
