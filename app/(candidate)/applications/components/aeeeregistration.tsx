@@ -157,12 +157,31 @@ export default function AeeeRegistration({ application }) {
     });
   };
 
+    {/* Admit Card form PDF download function */}
+    const downloadAdmitCard = () => {
+      const element = document.getElementById('hidden-admit-card');
+      element.style.display = 'block';
+      import('html2pdf.js').then(({ default: html2pdf }) => {
+        html2pdf(element, {
+          margin: 0,
+          filename: 'AdmitCard.pdf',
+          image: { type: 'jpeg', quality: 0.98 },
+          html2canvas: { scale: 1, useCORS: true },
+          jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+        }).then(() => {
+          element.style.display = 'none';
+        });
+      });
+    };  
+
+
 
    const cloudPhotoUrl = "https://res.cloudinary.com/dkzpmdjf0/image/upload/c_fill,h_150,w_120/";
    const cloudSignUrl = "https://res.cloudinary.com/dkzpmdjf0/image/upload/c_fill,h_150,w_300/";
    
 
-
+   const cloudACPhotoUrl = "https://res.cloudinary.com/dkzpmdjf0/image/upload/c_fill,h_120,w_100/";
+   const cloudACSignUrl = "https://res.cloudinary.com/dkzpmdjf0/image/upload/c_fill,h_50,w_100/";
   
 
   return (
@@ -186,6 +205,14 @@ export default function AeeeRegistration({ application }) {
                     >
                       <ArrowDownOnSquareIcon className="h-6 w-6"  />
                       Download Application
+                    </button>
+                    <button
+                      type="button"
+                      className="flex gap-1 items-center rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                      onClick={downloadAdmitCard}
+                    >
+                      <ArrowDownOnSquareIcon className="h-6 w-6"  />
+                      Download Admit Card
                     </button>
             </span>: ""
           } 
@@ -440,6 +467,124 @@ export default function AeeeRegistration({ application }) {
       </div>
       </div>
       
+
+{/* Admit Card PDF design */} 
+<div className="a4-div" id="hidden-admit-card">
+      <div id="admit-card">             
+       <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0 form-border border-right">
+        <div className="">
+            <img className="am-logo"
+                src="/images/pdf-logo.png"
+                 alt="Amrita Vishwa Vidyapeetham"
+            />  
+            </div>  
+            <div className="form-data sm:col-span-2 ">
+               <p className="form-header"> AMRITA ENTRANCE EXAMINATION ENGINEERING 2024 : Phase I</p>
+               <p className="form-header"> ADMIT CARD</p>
+            </div>
+           
+        </div>
+
+        <div className="sm:grid sm:grid-cols-4 sm:gap-0 sm:px-0">
+        <div className="form-border sm:col-span-3 sm:grid sm:grid-cols-4 sm:gap-0 sm:px-0">
+        <div className="form-details">
+             
+             <img className="mb-2"
+                 src={`${cloudACPhotoUrl}${candidate?.photoid}.jpg`}
+                 sizes="100vw"
+                 alt="Image of Student"
+             />
+          
+                               <img
+                                   src={`${cloudACSignUrl}${candidate?.signid}.jpg`}
+                                    alt="Signature of Student"
+                                   className="mb-0"
+                               />                            
+                       
+                </div>
+            <div className="form-details sm:col-span-3 ac-profile">
+                <p ><b><span className='ac-profile-span'>Registration No. </span>:  {registration.registrationNo} </b></p>
+                <p><span className='ac-profile-span'>Candidate Name</span>: {candidate?.fullname} </p>
+                <p><span className='ac-profile-span'>City </span>: {candidate?.city?.name}  </p>
+                <p><span className='ac-profile-span'>State </span>: {candidate?.state?.name}   </p>
+                <p><span className='ac-profile-span'>Mobile Number</span>: {candidate?.phone} </p>  
+                <p><span className='ac-profile-span'>Gender</span>:  {candidate?.gender?.name } </p>
+                <p><span className='ac-profile-span'>Date of Birth</span>: {dayjs(candidate?.dob).format("DD/MM/YYYY")} </p>            
+            </div> 
+        </div>
+        <div className="form-border">
+              
+               <div className="QR">
+               {/* Barcode generation from register number
+            <p><BarcodeComponent number={registration?.registrationNo}  /></p>
+             */}
+            <img  className="QR"
+                src="/images/QR.png"
+                 alt="Amrita Vishwa Vidyapeetham"
+            /> 
+            </div>
+             
+        </div>
+          </div>
+          <div className="sm:grid sm:grid-cols-2 sm:gap-0 sm:px-0">
+          <div className="form-border small-font">
+          <p>Candidate should produce the Admit Card (original) duly signed by the
+candidate and invigilator at the time of admission.</p>
+            </div>
+            <div className="form-border small-font">
+            <p>I have read the instructions given under and agree to abide by them.</p>
+            </div>
+            </div>
+
+            <div className="sm:grid sm:grid-cols-10 sm:gap-0 sm:px-0 ">
+            <div className="form-border small-font">Date</div>
+            <div className="form-border small-font">Reporting Time</div>
+            <div className="form-border small-font">Exam Time</div>
+            <div className="form-border small-font sm:col-span-3 ">Centre Address</div>
+            <div className="form-border small-font sm:col-span-2 ">Signature of Candidate
+             <p className="very-small-font">(Should be signed by the candidate in front of Invigilator in the examination hall)</p>
+             </div>
+            <div className="form-border small-font sm:col-span-2 ">Signature of Invigilator</div>
+            </div>
+            <div className="sm:grid sm:grid-cols-10 sm:gap-0 sm:px-0 border-bottom">
+            <div className="form-border small-font">28th April 2024</div>
+            <div className="form-border small-font">9:15 AM</div>
+            <div className="form-border small-font">10:00 AM to 12.30 PM</div>
+            <div className="form-border small-font sm:col-span-3 ">#234, 1st Cross, 6th Main, Koramangala,Bengalore-100</div>
+            <div className="form-border small-font sm:col-span-2 "></div>
+            <div className="form-border small-font sm:col-span-2 "></div>
+            </div>
+
+        <div className='sm:grid sm:grid-cols-1 sm:gap-0 sm:px-5 text-center sm:pt-3'> 
+           
+            <p><u><b>INSTRUCTIONS TO CANDIDATES</b></u></p>
+            <p className="small-font">(Candidates are required to carefully read / understand and must strictly follow the instructions).</p>
+        </div>
+        <div className='instructions'> 
+        <ul>
+          <li><span>1.</span><p>Ensure that all the details printed above are correct and true as per your knowledge. Note: Write to <a href="mailto:btech@amrita.edu">btech@amrita.edu</a> if there is any discrepancy, with proof for necessary rectification.</p></li>
+          <li><span>2.</span><p>You are required to appear for the examination at own expense at the time and centre as printed on the Admit Card, not in any other centre. You are also advised to acquaint yourselves with the location of the exam centre one day prior to the examination.</p></li>
+          <li><span>3.</span><p>You must be present at the Examination Centre allotted to you, 45 Minutes before the commencement of the examination. Candidates will be allowed to enter the Examination Centre after the starting of the Examination.</p></li>
+          <li><span>4.</span><p>You must report to the examination centre with a print copy of this Admit Card along with a valid photo identity card proof issued by the Government without which the candidate will not be allowed to appear for the examination. The candidate must produce, on demand, the Admit Card at the entrance & to the Invigilator.</p></li>
+          <li><span>5.</span><p>Paste a recent Passport size colour photograph/signature on the downloaded Admit Card if your photo/Signature is not printed in the Admit Card.</p></li>
+          <li><span>6.</span><p>Your Admit Card shall be preserved till the end of the Seat Allotment Process & shall produce in original, duly signed by you & invigilator at the time of admission, without which the admission will stand cancelled.</p></li>
+          <li><span>7.</span><p>Check your name in the Roster/Room list and proceed to the designated area. A seat with AEEE 2024 Registration number will be allotted to you. You must occupy the allotted seat ONLY. If you are found appearing in the examination from a seat or room other than the one allotted to you, your candidature shall be cancelled, and no plea would be accepted for it.</p></li>
+          <li><span>8.</span><p>You must strictly follow the instructions of the invigilator at the examination hall.</p></li>
+          <li><span>9.</span><p>The invigilator cannot and will not answer questions related to the questions in the examination.</p></li>
+          <li><span>10.</span><p>No material is not allowed in the Examination Hall. Examination will stand cancelled if you are found possessing any material other than Admit Card.</p></li>
+          <li><span>11.</span><p>Neither the university nor the exam centre will not be responsible for anything lost, stolen, or misplaced personal belongings.</p></li>
+          <li><span>12.</span><p>There are no scheduled breaks during the examination.</p></li>
+          <li><span>13.</span><p>You are required to carry your own pens, pencil etc. Paper will be provided for rough work, during the examination.</p></li>
+          <li><span>14.</span><p>The exam has negative marking for wrong answers. So please be sure of the option you choose for each question, as you will only be able to change your choice but not unselect it.</p></li>
+          <li><span>15.</span><p>You are governed by Rules and Regulations of the University regarding the conduct in the Examination Hall. All cases of unfair means will be dealt with as per university rules. Candidates shall maintain perfect silence and attend to their question paper only. Any conversation/gesture/disturbance in the Examination Hall/malpractice /attempt to commit malpractice/violation of the rules shall be deemed as misbehavior and will lead to disqualification of the candidate. Anything reported by the Invigilator, or the University Representative deputed for the same will be accepted as final.</p></li>
+          <li><span>16.</span><p>If a candidate is found using unfair means or impersonating, his/her candidature shall be cancelled, and he/she will be liable to be debarred for taking examination either permanently or for a specified period according to the nature of offence. The decision of the University representatives/Invigilators is final and binding on the candidate.</p></li>
+          <li><span>17.</span><p>You are not allowed to leave the examination hall before the scheduled end of the examination.</p></li>
+          <li><span>18.</span><p>JURISDICTION: Courts situated in Coimbatore District, Tamil Nadu only</p></li>
+    </ul>
+</div>     
+      </div>
+      </div>
+
        
     </>
     
