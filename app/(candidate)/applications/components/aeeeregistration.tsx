@@ -18,6 +18,7 @@ import ApplicationCities from "./applicationcity";
 import ToggleSwitch from "./toggleswitch";
 import BarcodeComponent from "./barcode";
 import QRcodeComponent from "./qrcode";
+import ExamTimeComponent from "./examtime";
 import html2pdf from 'html2pdf.js';
 import { ArrowDownOnSquareIcon } from "@heroicons/react/24/outline";
 import React from 'react';
@@ -166,8 +167,8 @@ export default function AeeeRegistration({ application }) {
         html2pdf(element, {
           margin: 0,
           filename: 'AdmitCard.pdf',
-          image: { type: 'jpeg', quality: 0.98 },
-          html2canvas: { scale: 1, useCORS: true },
+          image: { type: 'jpeg', quality: 1.0 },
+          html2canvas: { scale: 2, useCORS: true },
           jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
         }).then(() => {
           element.style.display = 'none';
@@ -184,6 +185,9 @@ export default function AeeeRegistration({ application }) {
    const cloudACPhotoUrl = "https://res.cloudinary.com/dkzpmdjf0/image/upload/c_fill,h_120,w_100/";
    const cloudACSignUrl = "https://res.cloudinary.com/dkzpmdjf0/image/upload/c_fill,h_50,w_100/";
   
+   const examStartTime = registration.AdmitCard.examTime; 
+   const examduration = { hours: 2, minutes: 0 };
+   const examreporting = { hours: 0, minutes: 45 };
 
   return (
     <>         
@@ -504,7 +508,7 @@ export default function AeeeRegistration({ application }) {
                        
                 </div>
             <div className="form-details sm:col-span-3 ac-profile">
-                <p ><b><span className='ac-profile-span'>Registration No. </span>:  {registration.registrationNo} </b></p>
+                <p ><b><span className='ac-profile-span'>Registration No. </span>:  {registration.AdmitCard.registrationNo} </b></p>
                 <p><span className='ac-profile-span'>Candidate Name</span>: {candidate?.fullname} </p>
                 <p><span className='ac-profile-span'>City </span>: {candidate?.city?.name}  </p>
                 <p><span className='ac-profile-span'>State </span>: {candidate?.state?.name}   </p>
@@ -517,7 +521,7 @@ export default function AeeeRegistration({ application }) {
               
                <div className="QR">
                        {/* QR code generation from register number */}
-          <QRcodeComponent text={registration?.registrationNo} size={160}/>
+          <QRcodeComponent text={registration.AdmitCard.qrcode} size={160}/>
              
             </div>
              
@@ -544,14 +548,15 @@ candidate and invigilator at the time of admission.</p>
             <div className="form-border small-font sm:col-span-2 pad-4">Signature of Invigilator</div>
             </div>
             <div className="sm:grid sm:grid-cols-10 sm:gap-0 sm:px-0 border-bottom">
-            <div className="form-border small-font pad-4"><b>28th April 2024</b></div>
-            <div className="form-border small-font pad-4"><b>9:15 AM</b></div>
-            <div className="form-border small-font pad-4"><b>10:00 AM to 12.30 PM</b></div>
-            <div className="form-border small-font sm:col-span-3 pad-4"><b>#234, 1st Cross, 6th Main, Koramangala,Bengalore-100</b></div>
-            <div className="form-border small-font sm:col-span-2 pad-4"></div>
-            <div className="form-border small-font sm:col-span-2 pad-4"></div>
-            </div>
+            <div className="form-border small-font pad-4"><b>{dayjs(registration.AdmitCard.examDate).format("DD MMM YYYY")}</b></div>
+            <div className="form-border small-font pad-4"><b><ExamTimeComponent examTime={examStartTime} duration={examreporting}  operation="subtract" /></b></div>
+             
 
+            <div className="form-border small-font pad-4"><b><ExamTimeComponent examTime={examStartTime} duration={examduration}  operation="add" /></b></div>
+            <div className="form-border small-font sm:col-span-3 pad-4"><b>{registration.AdmitCard.locationName},{registration.AdmitCard.locationAddress},{registration.AdmitCard.pincode}</b></div>
+            <div className="form-border small-font sm:col-span-2 pad-4"></div>
+            <div className="form-border small-font sm:col-span-2 pad-4"></div>
+            </div>            
         <div className='sm:grid sm:grid-cols-1 sm:gap-0 sm:px-5 text-center sm:pt-2'> 
            
             <p><u><b>INSTRUCTIONS TO CANDIDATES</b></u></p>

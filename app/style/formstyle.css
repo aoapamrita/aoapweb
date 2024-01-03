@@ -151,7 +151,7 @@ height: 297mm;
 background-color: #fff;
 box-sizing: border-box;
 margin: 0 auto; /* Center the div horizontally */
-padding: 5px !important;
+padding: 10px !important;
 }
 
 .ac-profile p{
