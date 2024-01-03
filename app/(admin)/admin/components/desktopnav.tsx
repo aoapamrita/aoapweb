@@ -69,6 +69,7 @@ const navigation = [
       { name: "Sync Users", href: "/admin/vendors/usersync" },
     ],
   },
+  { name: "Sync with LSQ", href: "/admin/vendors/bulklsq" },
 ];
 
 const DesktopNav = () => {

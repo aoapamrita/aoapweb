@@ -1,0 +1,92 @@
+@page {
+    size: A4;
+    margin: 0;
+  }
+
+.a4-div {
+  width: 210mm;
+  height: 297mm;
+  background-color: #fff;
+  /* border: 1px solid #000; 
+  box-sizing: border-box; */
+  margin: 0 auto; /* Center the div horizontally */
+  padding: 20px;
+}
+
+.head-section{
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #000; 
+    width: 100%;
+    margin-bottom: 15px; 
+}
+
+.logo{
+    margin-right: 20px;
+}
+
+.receipt-details {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 15px;
+    margin-right: 6rem;
+    margin-bottom: 10px;
+}
+
+.receipt-date{
+    font-weight: bold;
+}
+
+.date-span
+ {
+    min-width: 100px;
+    width: 100px;
+    max-width: 100px;
+    display: inline-block;
+ }
+
+.receipt-address{
+    font-weight: bold;
+}
+
+ .add-span
+ {
+    min-width: 165px;
+    width: 165px;
+    max-width: 165px;
+    display: inline-block;
+ }
+
+.tnx-table {
+    width: 100%;
+    height:110px;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  
+  .head-data, .table-data {
+    border: 2px solid #ffffff;
+    padding: 8px;
+    text-align: center;
+  }
+  
+  .head-data {
+    background-color:rgb(68 144 221);
+    text-align: center;
+  }
+
+  .table-body{
+    background-color:rgb(214 235 255);
+  }
+  
+  .tb{
+    text-align: right;
+  }
+  
+
+  
+
+  
+ 
+  
+ 

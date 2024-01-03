@@ -1,123 +1,227 @@
- #application-form {
-    display: flex;
-    flex-wrap: wrap;
-    grid-template-columns: repeat(2, 1fr); 
-    gap: 20px; 
-    padding: 40px;
-    position: relative;
-  }
-
-  .bold-heading {
-    font-weight: bold;
-    margin-bottom: 20px;
-  }
-  
-  .form-section {
-    width: 100%;
-    box-sizing: border-box;
-    border: 1px solid #be0470; 
-    padding-left: 10px;
-    margin-bottom: 20px;
-
-  }
-
-  .header{
-    padding:10px;
-  }
-  
-  .form-logo {
-    margin-top: 30px;
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
-  }
-
-  .form-column {
-    width: 50%; 
-    box-sizing: border-box;
-    border: 1px solid #be0470; 
-    padding: 10px;
-    flex: 1
-  }
-  .nb
-  {
-    border: none !important; 
-    padding: 0px  !important; 
-  }
-  .form-appln-b {
-    border: 1px solid #be0470;
-    padding: 10px;
+#application-form {
+  display: flex;
+  flex-wrap: wrap;
+  grid-template-columns: repeat(2, 1fr); 
+  gap: 20px; 
+  padding: 40px;
+  position: relative;
 }
-  
- .form-data{
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    font-weight: 400;
-    font-size: 22px;
-    
- }
- 
- .profile-span
- {
-    min-width: 265px;
-    width: 265px;
-    max-width: 265px;
-    display: inline-block;
- }
-  
- .form-image {
-    position: absolute;
-    overflow: hidden;
-    top: 0;
-    right: 0;
-    box-sizing: border-box;
-    border: 2px solid #222; 
-    margin-right: 40px;
-    margin-top: 10px;
-    margin-bottom: 10px;
 
-  }
+.bold-heading {
+  font-weight: bold;
+  margin-bottom: 20px;
+}
 
-  .form-image img {
-    max-width: 100%;
-    height: 150px;
-    width: 120px;
-    object-fit: cover;
+.form-section {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #be0470; 
+  padding-left: 10px;
+  margin-bottom: 20px;
+
+}
+
+.header{
+  padding:10px;
+}
+
+.form-logo {
+  margin-top: 30px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.form-column {
+  width: 50%; 
+  box-sizing: border-box;
+  border: 1px solid #be0470; 
+  padding: 10px;
+  flex: 1
+}
+.nb
+{
+  border: none !important; 
+  padding: 0px  !important; 
+}
+.form-appln-b {
+  border: 1px solid #be0470;
+  padding: 10px;
+}
+
+.form-data{
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-weight: 400;
+  font-size: 22px;
+  
+}
+
+.profile-span
+{
+  min-width: 265px;
+  width: 265px;
+  max-width: 265px;
+  display: inline-block;
+}
+
+.form-image {
+  position: absolute;
+  overflow: hidden;
+  top: 0;
+  right: 0;
+  box-sizing: border-box;
+  border: 2px solid #222; 
+  margin-right: 40px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+
+}
+
+.form-image img {
+  max-width: 100%;
+  height: 150px;
+  width: 120px;
+  object-fit: cover;
 
 
-  }
+}
 
-  .form-reg
-  {
-    padding-left: 15rem;
-  }
-  .form-end{
-    margin-top: 10px;
-    
-  }
+.form-reg
+{
+  padding-left: 15rem;
+}
+.form-end{
+  margin-top: 10px;
   
-  .form-signature {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end; 
-    justify-content: flex-end; 
-    margin-top: -50px;
-  }
+}
+
+.form-signature {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end; 
+  justify-content: flex-end; 
+  margin-top: -50px;
+}
+
+.form-signature img {
+  max-width: 100%;
+  height: 100px;
+  display: block;
+  border: 2px solid #838282; 
+  width: 200px;
+  object-fit: cover;
+}
+
+.sign-text {
+  text-align: right;
+  padding-right: 10px;
+  margin-top: -20px;
+}
+
+
+/* Admit Card Styles */
+
+.form-border {
+  box-sizing: border-box;
+  border: 1px solid #222; 
+  padding: 10px;
+  border-bottom: transparent;
+  border-right: transparent;
+  flex: 1;
   
-  .form-signature img {
-    max-width: 100%;
-    height: 100px;
-    display: block;
-    border: 2px solid #838282; 
-    width: 200px;
-    object-fit: cover;
-  }
+}
+.form-border:last-child {
+  border-right: 1px solid #222; 
   
-  .sign-text {
-    text-align: right;
-    padding-right: 10px;
-    margin-top: -20px;
-  }
-  
+}
+.form-header
+{
+font-size: 15px;
+font-weight: bold;
+}
+
+@page {
+size: A4;
+margin: 0cm;
+}
+.a4-div {
+width: 210mm;
+height: 297mm;
+background-color: #fff;
+box-sizing: border-box;
+margin: 0 auto; /* Center the div horizontally */
+padding: 5px !important;
+}
+
+.ac-profile p{
+font-size: 14px;
+line-height: 25px;
+}
+.ac-profile-span
+{
+ min-width: 135px;
+ width: 135px;
+ max-width: 135px;
+ display: inline-block;
+}
+.QR
+{
+width: 150px;
+margin: 0px auto;
+}
+.small-font
+{
+font-size: 12px;
+text-align: center;
+}
+.border-bottom
+{
+border-bottom: 1px solid #222; 
+}
+.border-right
+{
+border-right: 1px solid #222; 
+}
+
+.very-small-font
+{
+font-size: 7px;
+text-align: center;
+}
+.instructions 
+{
+padding: 10px;
+}
+.instructions ul li
+{
+font-size: 10.5px;
+text-align: left;
+}
+
+.instructions ul {
+list-style-type: none;
+padding: 0;
+}
+
+.instructions  ul li {
+counter-increment: my-counter;
+margin-bottom: 2px;
+display: flex;
+align-items: flex-start;
+}
+
+.instructions  ul li > p {
+margin: 0;
+margin-left:20px;
+}
+.instructions  ul li > span {
+display: inline-block;
+width: 7px; /* Adjust as needed for the width of the span */
+}
+.am-logo
+{
+width: 150px;
+}
