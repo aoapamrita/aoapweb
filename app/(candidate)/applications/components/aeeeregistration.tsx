@@ -17,6 +17,7 @@ import DataLoader from "@/app/components/DataLoader";
 import ApplicationCities from "./applicationcity";
 import ToggleSwitch from "./toggleswitch";
 import BarcodeComponent from "./barcode";
+import QRcodeComponent from "./qrcode";
 import html2pdf from 'html2pdf.js';
 import { ArrowDownOnSquareIcon } from "@heroicons/react/24/outline";
 import React from 'react';
@@ -197,10 +198,10 @@ export default function AeeeRegistration({ application }) {
               }
           </h3>
           {registration?
-            <span className="flex justify-end">
+            <span className="flex  gap-4 justify-end">
                   <button
                       type="button"
-                      className="flex gap-1 items-center rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                      className="flex gap-1 items-center rounded-md bg-white px-2.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                       onClick={downloadPDF}
                     >
                       <ArrowDownOnSquareIcon className="h-6 w-6"  />
@@ -208,7 +209,7 @@ export default function AeeeRegistration({ application }) {
                     </button>
                     <button
                       type="button"
-                      className="flex gap-1 items-center rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                      className="flex gap-1 items-center rounded-md bg-white px-2.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                       onClick={downloadAdmitCard}
                     >
                       <ArrowDownOnSquareIcon className="h-6 w-6"  />
@@ -469,7 +470,7 @@ export default function AeeeRegistration({ application }) {
       
 
 {/* Admit Card PDF design */} 
-<div className="a4-div" id="hidden-admit-card">
+<div className="hidden a4-div" id="hidden-admit-card">
       <div id="admit-card">             
        <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0 form-border border-right">
         <div className="">
@@ -515,44 +516,40 @@ export default function AeeeRegistration({ application }) {
         <div className="form-border">
               
                <div className="QR">
-               {/* Barcode generation from register number
-            <p><BarcodeComponent number={registration?.registrationNo}  /></p>
-             */}
-            <img  className="QR"
-                src="/images/QR.png"
-                 alt="Amrita Vishwa Vidyapeetham"
-            /> 
+                       {/* QR code generation from register number */}
+          <QRcodeComponent text={registration?.registrationNo} size={160}/>
+             
             </div>
              
         </div>
           </div>
           <div className="sm:grid sm:grid-cols-2 sm:gap-0 sm:px-0">
-          <div className="form-border small-font">
+          <div className="form-border small-font pad-4">
           <p>Candidate should produce the Admit Card (original) duly signed by the
 candidate and invigilator at the time of admission.</p>
             </div>
-            <div className="form-border small-font">
+            <div className="form-border small-font pad-4">
             <p>I have read the instructions given under and agree to abide by them.</p>
             </div>
             </div>
 
             <div className="sm:grid sm:grid-cols-10 sm:gap-0 sm:px-0 ">
-            <div className="form-border small-font">Date</div>
-            <div className="form-border small-font">Reporting Time</div>
-            <div className="form-border small-font">Exam Time</div>
-            <div className="form-border small-font sm:col-span-3 ">Centre Address</div>
-            <div className="form-border small-font sm:col-span-2 ">Signature of Candidate
+            <div className="form-border small-font pad-4">Exam Date</div>
+            <div className="form-border small-font pad-4">Reporting Time</div>
+            <div className="form-border small-font pad-4">Exam Time</div>
+            <div className="form-border small-font sm:col-span-3 pad-4">Centre Address</div>
+            <div className="form-border small-font sm:col-span-2 pad-4">Signature of Candidate
              <p className="very-small-font">(Should be signed by the candidate in front of Invigilator in the examination hall)</p>
              </div>
-            <div className="form-border small-font sm:col-span-2 ">Signature of Invigilator</div>
+            <div className="form-border small-font sm:col-span-2 pad-4">Signature of Invigilator</div>
             </div>
             <div className="sm:grid sm:grid-cols-10 sm:gap-0 sm:px-0 border-bottom">
-            <div className="form-border small-font">28th April 2024</div>
-            <div className="form-border small-font">9:15 AM</div>
-            <div className="form-border small-font">10:00 AM to 12.30 PM</div>
-            <div className="form-border small-font sm:col-span-3 ">#234, 1st Cross, 6th Main, Koramangala,Bengalore-100</div>
-            <div className="form-border small-font sm:col-span-2 "></div>
-            <div className="form-border small-font sm:col-span-2 "></div>
+            <div className="form-border small-font pad-4"><b>28th April 2024</b></div>
+            <div className="form-border small-font pad-4"><b>9:15 AM</b></div>
+            <div className="form-border small-font pad-4"><b>10:00 AM to 12.30 PM</b></div>
+            <div className="form-border small-font sm:col-span-3 pad-4"><b>#234, 1st Cross, 6th Main, Koramangala,Bengalore-100</b></div>
+            <div className="form-border small-font sm:col-span-2 pad-4"></div>
+            <div className="form-border small-font sm:col-span-2 pad-4"></div>
             </div>
 
         <div className='sm:grid sm:grid-cols-1 sm:gap-0 sm:px-5 text-center sm:pt-2'> 
@@ -580,7 +577,7 @@ candidate and invigilator at the time of admission.</p>
           <li><span>16.</span><p>If a candidate is found using unfair means or impersonating, his/her candidature shall be cancelled, and he/she will be liable to be debarred for taking examination either permanently or for a specified period according to the nature of offence. The decision of the University representatives/Invigilators is final and binding on the candidate.</p></li>
           <li><span>17.</span><p>You are not allowed to leave the examination hall before the scheduled end of the examination.</p></li>
           <li><span>18.</span><p>JURISDICTION: Courts situated in Coimbatore District, Tamil Nadu only</p></li>
-    </ul>
+            </ul>
 </div>     
       </div>
       </div>

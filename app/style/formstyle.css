@@ -143,10 +143,8 @@ font-size: 15px;
 font-weight: bold;
 }
 
-@page {
-size: A4;
-margin: 0cm;
-}
+
+
 .a4-div {
 width: 210mm;
 height: 297mm;
@@ -169,8 +167,9 @@ line-height: 25px;
 }
 .QR
 {
-width: 150px;
-margin: 0px auto;
+  width: 160px;
+  height: 160px;
+  margin: 10px 5px;
 }
 .small-font
 {
@@ -197,7 +196,7 @@ padding: 10px;
 }
 .instructions ul li
 {
-font-size: 10.5px;
+font-size: 11px;
 text-align: left;
 }
 
@@ -208,7 +207,7 @@ padding: 0;
 
 .instructions  ul li {
 counter-increment: my-counter;
-margin-bottom: 2px;
+margin-bottom: 1px;
 display: flex;
 align-items: flex-start;
 }
@@ -224,4 +223,8 @@ width: 7px; /* Adjust as needed for the width of the span */
 .am-logo
 {
 width: 150px;
+}
+.pad-4
+{
+  padding: 0px 4px 8px !important
 }
