@@ -77,7 +77,7 @@ const AcademicInfo = ({ candidate }) => {
     const uname = candidate.fullname;
     let uphone = candidate.phone;
     let email = candidate.email;
-    const source = candidate.infosource.name;
+    const source = candidate.infosource;
     const section = "Personal Details";
     const paystatus = "Unpaid";
     await invokeAPI({

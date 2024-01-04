@@ -184,8 +184,8 @@ export default function AeeeRegistration({ application }) {
 
    const cloudACPhotoUrl = "https://res.cloudinary.com/dkzpmdjf0/image/upload/c_fill,h_120,w_100/";
    const cloudACSignUrl = "https://res.cloudinary.com/dkzpmdjf0/image/upload/c_fill,h_50,w_100/";
-  
-   const examStartTime = registration.AdmitCard.examTime; 
+   let examStartTime;
+   {registration && registration.AdmitCard ?  examStartTime = registration.AdmitCard.examTime : "" };
    const examduration = { hours: 2, minutes: 0 };
    const examreporting = { hours: 0, minutes: 45 };
 
@@ -474,6 +474,7 @@ export default function AeeeRegistration({ application }) {
       
 
 {/* Admit Card PDF design */} 
+{registration && registration.AdmitCard ? (
 <div className="hidden a4-div" id="hidden-admit-card">
       <div id="admit-card">             
        <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0 form-border border-right">
@@ -586,7 +587,7 @@ candidate and invigilator at the time of admission.</p>
 </div>     
       </div>
       </div>
-
+):null}
        
     </>
     
