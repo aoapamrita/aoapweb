@@ -12,7 +12,6 @@ const GetRegistrationNo = ({ application }) => {
     const res = await registerForExam({
       examId: application.examId,
       examapplicationId: application.id,
-      transactionId: "123",
     });
 
     if (res.errors) {
