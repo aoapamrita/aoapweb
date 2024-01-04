@@ -12,6 +12,7 @@ import { Spinner } from "flowbite-react";
 import sendWelcome from "@/app/data/admin/sendwelcome";
 import { ExclamationCircleIcon } from "@heroicons/react/24/outline";
 import { clsx } from "clsx";
+import { completeOMRRegistration } from "@/app/data/omr/omr";
 
 const AcademicInfoSchema = yup.object().shape({
   stateId: yup
@@ -58,6 +59,13 @@ const AcademicInfo = ({ candidate }) => {
   const onSubmit = async (data) => {
     console.log("plus two data", data);
     const res = await createCandidatePlustwo(data);
+
+    // if omr candidate then complete registration
+    if (candidate.isOMR) {
+      await completeOMRRegistration({
+        candidateid: candidate.id,
+      });
+    }
 
     const onboarding = await updateOnboarding({
       data: { status: true },
