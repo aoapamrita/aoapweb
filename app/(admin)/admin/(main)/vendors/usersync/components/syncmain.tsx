@@ -9,6 +9,7 @@ import ListUsers from "./listusers";
 const SyncMain = () => {
   const [entranceId, setEntranceId] = useState(null);
   const [examId, setExamId] = useState(null);
+  const [showFailed, setShowFailed] = useState(false);
 
   const { data: entrances, isLoading: entrancesLoading } = useQuery({
     queryKey: ["entrances"],
@@ -107,11 +108,18 @@ const SyncMain = () => {
       <div>
         {examId && (
           <>
-            <div className="flex justify-end">
+            <div className="flex justify-end gap-3">
               <SyncUsers examId={examId} />
+              <button
+                type="button"
+                onClick={() => setShowFailed((v) => !v)}
+                className="flex items-center gap-2 rounded-md bg-pink-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-pink-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink-600"
+              >
+                Show Failed
+              </button>
             </div>
             <div className="-mx-4 mt-10 ring-1 ring-gray-300 sm:mx-0 sm:rounded-lg">
-              <ListUsers examId={examId} />
+              {showFailed && <ListUsers examId={examId} />}
             </div>
           </>
         )}

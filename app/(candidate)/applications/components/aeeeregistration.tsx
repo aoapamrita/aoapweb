@@ -239,14 +239,21 @@ export default function AeeeRegistration({ application }) {
                   Slot details
                 </dt>
                 <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                  <p>Registration No : {registration.Slot.registrationNo}</p>
-                  <p>Exam Mode : {registration.Slot.examMode}</p>
                   <p>
-                    Exam Date:{" "}
+                    <span className="font-semibold">Exam Date: </span>
                     {dayjs(registration.Slot.examDate).format("DD/MM/YYYY")}
                   </p>
-                  <p>Exam Time: {registration.Slot.examTime}</p>
-                  <p>Selected City: {registration.Slot.selectedCityCode}</p>
+                  <p>
+                    <span className="font-semibold">Exam Time: </span>
+                    {registration.Slot.examTime}
+                  </p>
+                  <p>
+                    <span className="font-semibold">Selected City: </span>
+                    {registration.Slot.selectedCityCode}
+                  </p>
+                  <p className="mt-2 text-xs leading-5 text-gray-600 italic">
+                    Admit card will have more details
+                  </p>
                 </dd>
               </div>
             ) : null}
