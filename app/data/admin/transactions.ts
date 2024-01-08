@@ -29,3 +29,12 @@ export async function createEntranceTransaction(input) {
     return data;
   }
 }
+
+export const getAllTransaction = async () => {
+  try {
+    const { data } = await apiclient.get(`/api/transactions/entrance/all/`);
+    return data;
+  } catch (error) {
+    return null;
+  }
+};
